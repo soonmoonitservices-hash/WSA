@@ -30,5 +30,6 @@ function initFormStatus() {
 initNavigation();
 initFormStatus();
 initCookieBanner();
+initHeroVideo();
 initHeroNetwork();
 initTypewriter();

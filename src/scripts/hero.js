@@ -116,6 +116,29 @@ function initHeroNetwork() {
   start();
 }
 
+/**
+ * Background video: loaded only after the page has finished loading, and not at
+ * all with reduced motion or Data Saver – then the poster image stays.
+ */
+function initHeroVideo() {
+  const video = document.querySelector('.hero__video');
+  if (!video || prefersReducedMotion() || navigator.connection?.saveData) return;
+
+  const load = () => {
+    const large = window.matchMedia('(min-width: 48rem)').matches;
+    video.src = large ? video.dataset.srcLarge : video.dataset.srcSmall;
+    video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
+
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }).observe(video);
+  };
+
+  if (document.readyState === 'complete') load();
+  else window.addEventListener('load', load, { once: true });
+}
+
 /** Types and deletes the words from data-words="A|B|C" in a loop. */
 function initTypewriter() {
   const el = document.querySelector('[data-words]');

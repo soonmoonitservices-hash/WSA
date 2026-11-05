@@ -33,6 +33,15 @@ Der Build listet alle fehlenden Angaben auf; auf der Seite erscheinen sie gelb m
 2. `src/pages/legal.js`: Texte der Datenschutzerklärung.
 3. `public/api/kontakt.php`: `RECIPIENT` und `SENDER` setzen.
 
+## Medien & Lizenzen
+
+| Datei | Quelle | Lizenz |
+| --- | --- | --- |
+| `public/assets/video/hero-*.mp4`, `hero-poster.jpg` | [Mixkit #42342 – „Aerial shot of a city at night“](https://mixkit.co/free-stock-video/aerial-shot-of-a-city-at-night-42342/) | Mixkit Stock Video Free License (kommerziell nutzbar, keine Namensnennung nötig; nicht als Einzeldatei weiterverkaufen) |
+| `public/assets/img/logo.png` | WSA Sicherheit GmbH | Eigentum des Kunden |
+
+Das Video wurde ohne Tonspur neu kodiert (720p ≈ 1,2 MB, 360p ≈ 0,35 MB für Mobilgeräte).
+
 ## Sicherheit & Performance
 
 - Strenge Content-Security-Policy, HSTS, Clickjacking- und MIME-Schutz (`public/.htaccess`).

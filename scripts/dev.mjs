@@ -23,6 +23,7 @@ const TYPES = {
   '.jpg': 'image/jpeg',
   '.webp': 'image/webp',
   '.avif': 'image/avif',
+  '.mp4': 'video/mp4',
   '.xml': 'application/xml',
   '.txt': 'text/plain; charset=utf-8',
 };

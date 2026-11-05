@@ -20,6 +20,10 @@ const radar = () => html`
 
 const hero = () => html`
   <section class="hero">
+    <video class="hero__video" muted loop playsinline preload="none" aria-hidden="true"
+      poster="/assets/video/hero-poster.jpg"
+      data-src-small="/assets/video/hero-360.mp4"
+      data-src-large="/assets/video/hero-720.mp4"></video>
     <canvas class="hero__canvas" aria-hidden="true"></canvas>
     <div class="container hero__inner">
       <div class="hero__content">
