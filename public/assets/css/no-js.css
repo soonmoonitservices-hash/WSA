@@ -1,0 +1,7 @@
+/* Fallback ohne JavaScript: Menü auf kleinen Bildschirmen offen anzeigen. */
+@media (max-width: 52rem) {
+  .nav-toggle { display: none; }
+  .site-header__inner { flex-wrap: wrap; padding-block: 0.5rem; }
+  .nav { position: static; display: block; width: 100%; border: 0; box-shadow: none; }
+  .nav__list { flex-direction: row; flex-wrap: wrap; padding: 0; }
+}

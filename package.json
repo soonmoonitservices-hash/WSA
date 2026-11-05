@@ -1,0 +1,14 @@
+{
+  "name": "wsa-sicherheit-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website der WSA Sicherheit GmbH – statisch, schnell, ohne Abhängigkeiten.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev.mjs"
+  }
+}

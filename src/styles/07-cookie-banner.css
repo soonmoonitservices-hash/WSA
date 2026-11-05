@@ -1,0 +1,40 @@
+.cookie-banner {
+  position: fixed;
+  right: var(--gutter);
+  bottom: var(--gutter);
+  left: var(--gutter);
+  z-index: 90;
+  display: grid;
+  gap: var(--space-m);
+  max-width: 34rem;
+  margin-left: auto;
+  padding: var(--space-m);
+  border: 1px solid var(--c-line);
+  border-top: 4px solid var(--c-blue);
+  border-radius: var(--radius);
+  background: var(--c-white);
+  box-shadow: 0 20px 50px rgb(10 21 54 / 25%);
+  animation: rise 0.45s 0.4s var(--ease) both; /* Keyframes in 06-hero.css */
+}
+
+.cookie-banner__title {
+  margin-bottom: var(--space-xs);
+  font-size: var(--fs-h3);
+}
+
+.cookie-banner__text {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: 0.9375rem;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  justify-content: flex-end;
+}
+
+.cookie-banner .button {
+  padding: 0.7rem 1.2rem;
+}

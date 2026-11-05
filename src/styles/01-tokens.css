@@ -1,0 +1,39 @@
+/* Design-Tokens – Farben aus dem WSA-Logo. */
+:root {
+  --c-navy: #101f4d;
+  --c-navy-deep: #0a1536;
+  --c-blue: #4ea7d8;
+  --c-blue-dark: #1d6a9c;
+  --c-blue-soft: #e6f2fa;
+  --c-ink: #0f1424;
+  --c-text: #2a2f3a;
+  --c-muted: #5b6170;
+  --c-line: #e1e4ea;
+  --c-surface: #f3f4f7;
+  --c-white: #fff;
+  --c-placeholder-bg: #fff3c4;
+  --c-placeholder-text: #6b5200;
+  --c-error-bg: #fdecec;
+  --c-error-text: #8a1c1c;
+
+  --font: "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --fs-sm: 0.875rem;
+  --fs-base: 1.0625rem;
+  --fs-lg: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
+  --fs-h3: 1.1875rem;
+  --fs-h2: clamp(1.625rem, 1.2rem + 1.6vw, 2.375rem);
+  --fs-h1: clamp(2.25rem, 1.4rem + 3.4vw, 4rem);
+
+  --space-xs: 0.5rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: clamp(3.5rem, 2.5rem + 4vw, 6.5rem);
+
+  --radius: 6px;
+  --container: 74rem;
+  --gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --header-h: 4.75rem;
+  --shadow: 0 1px 2px rgb(16 31 77 / 6%), 0 8px 24px rgb(16 31 77 / 8%);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

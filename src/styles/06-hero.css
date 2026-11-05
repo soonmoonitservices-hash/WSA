@@ -1,0 +1,213 @@
+/* ---------- Startseiten-Hero: Partikel-Netz, Radar, Schreibmaschine ---------- */
+.hero {
+  min-height: min(52rem, calc(100svh - var(--header-h)));
+  display: grid;
+  align-items: center;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__inner {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+  padding-block: clamp(4rem, 2rem + 7vw, 8rem);
+}
+
+@media (min-width: 64rem) {
+  .hero__inner {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: var(--space-m);
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgb(78 167 216 / 35%);
+  border-radius: 999px;
+  background: rgb(10 21 54 / 55%);
+  color: rgb(255 255 255 / 85%);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.04em;
+}
+
+.hero__typed {
+  min-width: 1ch;
+  color: var(--c-blue);
+  font-weight: 600;
+}
+
+.hero__typed::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: currentcolor;
+  animation: blink 1s steps(1) infinite;
+}
+
+.hero__live {
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #3ddc84;
+}
+
+.hero__live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: ping 1.8s var(--ease) infinite;
+}
+
+.hero__title {
+  max-width: 14ch;
+  color: var(--c-white);
+  font-size: var(--fs-h1);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+.hero__title span {
+  display: block;
+  background: linear-gradient(90deg, var(--c-blue), #a9dcf7, var(--c-blue));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 600;
+  animation: shine 6s linear infinite;
+}
+
+.hero__lead {
+  max-width: 36rem;
+  margin-block: var(--space-m) var(--space-l);
+  font-size: var(--fs-lg);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+}
+
+/* Einflug-Animation beim Laden */
+.hero__content > * {
+  animation: rise 0.8s var(--ease) both;
+}
+
+.hero__content > :nth-child(2) { animation-delay: 0.1s; }
+.hero__content > :nth-child(3) { animation-delay: 0.25s; }
+.hero__content > :nth-child(4) { animation-delay: 0.4s; }
+
+/* ---------- Radar ---------- */
+.radar {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 26rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(78 167 216 / 40%);
+  border-radius: 50%;
+  background:
+    linear-gradient(rgb(78 167 216 / 18%), rgb(78 167 216 / 18%)) center / 1px 100% no-repeat,
+    linear-gradient(rgb(78 167 216 / 18%), rgb(78 167 216 / 18%)) center / 100% 1px no-repeat,
+    repeating-radial-gradient(circle, transparent 0 15.5%, rgb(78 167 216 / 22%) 15.5% calc(15.5% + 1px)),
+    radial-gradient(circle, rgb(16 31 77 / 60%), rgb(10 21 54 / 85%));
+  box-shadow: 0 0 80px rgb(78 167 216 / 20%), inset 0 0 60px rgb(78 167 216 / 12%);
+  animation: rise 1s 0.3s var(--ease) both;
+}
+
+.radar__sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  /* Vorderkante bei 0°, Schweif dahinter. */
+  background: conic-gradient(transparent 0deg 290deg, rgb(78 167 216 / 0%) 290deg, rgb(78 167 216 / 55%) 360deg);
+  animation: sweep 4s linear infinite;
+}
+
+.radar__blip {
+  position: absolute;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin: -0.3rem;
+  border-radius: 50%;
+  background: #a9dcf7;
+  box-shadow: 0 0 12px var(--c-blue);
+  opacity: 0;
+  animation: blip 4s linear infinite;
+}
+
+/* Blips leuchten auf, wenn der Strahl sie überstreicht (Winkel ≙ Verzögerung). */
+.radar__blip:nth-of-type(1) { top: 26%; left: 64%; animation-delay: 0.35s; }
+.radar__blip:nth-of-type(2) { top: 62%; left: 78%; animation-delay: 1.3s; }
+.radar__blip:nth-of-type(3) { top: 74%; left: 33%; animation-delay: 2.5s; }
+.radar__blip:nth-of-type(4) { top: 34%; left: 22%; animation-delay: 3.4s; }
+
+.radar__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 22%;
+  aspect-ratio: 1;
+  border: 1px solid rgb(78 167 216 / 50%);
+  border-radius: 50%;
+  background: var(--c-navy-deep);
+  color: var(--c-blue);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  transform: translate(-50%, -50%);
+}
+
+.radar__core .icon {
+  width: 1em;
+  height: 1em;
+}
+
+@media (max-width: 63.99rem) {
+  .radar {
+    display: none;
+  }
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes sweep {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blip {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  4% { opacity: 1; transform: scale(1.4); }
+  40% { opacity: 0.15; transform: scale(1); }
+}
+
+@keyframes ping {
+  to { opacity: 0; transform: scale(3); }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
