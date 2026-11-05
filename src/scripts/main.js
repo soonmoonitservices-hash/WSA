@@ -8,7 +8,13 @@ function initNavigation() {
   const setOpen = (open) => {
     toggle.setAttribute('aria-expanded', String(open));
     nav.classList.toggle('is-open', open);
+    document.documentElement.classList.toggle('nav-open', open); // sperrt das Scrollen dahinter
   };
+
+  // Beim Wechsel auf Desktop-Breite Menü schließen
+  window.matchMedia('(min-width: 52.01rem)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
 
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
   document.addEventListener('keydown', (event) => {

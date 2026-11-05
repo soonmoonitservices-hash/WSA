@@ -34,8 +34,8 @@ const hero = () => html`
         <h1 class="hero__title">Ihre Sicherheit <span>ist unsere Mission.</span></h1>
         <p class="hero__lead">Wir setzen auf moderne Sicherheitsdienstleistungen in der Region Hannover und darüber hinaus.</p>
         <div class="hero__actions">
-          ${button({ href: '/leistungen/', label: 'Unsere Leistungen', variant: 'light', withIcon: true })}
-          ${button({ href: '/kontakt/', label: 'Kontakt aufnehmen', variant: 'outline-light' })}
+          ${button({ href: '/leistungen/', label: 'Unsere Leistungen', variant: 'primary', withIcon: true })}
+          ${button({ href: '/kontakt/', label: 'Kontakt aufnehmen', variant: 'outline' })}
         </div>
       </div>
       ${radar()}
@@ -59,14 +59,18 @@ const intro = () => html`
 `;
 
 const servicesPreview = () => html`
-  <section class="section section--muted">
+  <section class="section">
     <div class="container">
       ${sectionHeading({
         eyebrow: 'Leistungen',
         title: 'Sie haben sich spezialisiert? Wir auch. Auf Sie!',
         intro: 'Sicherheit ohne Seriosität ist nicht denkbar. Deshalb zählt für uns nicht nur, was wir tun, sondern auch, wie wir es tun.',
       })}
-      <ul class="card-grid">${services.map(serviceCard)}</ul>
+      <ul class="card-grid card-grid--swipe">${services.map(serviceCard)}</ul>
+      <p class="swipe-hint" aria-hidden="true">Wischen für weitere Leistungen ${icon('arrowRight')}</p>
+      <div class="section-actions">
+        ${button({ href: '/leistungen/', label: 'Alle Leistungen ansehen', variant: 'primary', withIcon: true })}
+      </div>
     </div>
   </section>
 `;

@@ -147,6 +147,20 @@
   gap: var(--space-s);
 }
 
+@media (max-width: 39.99rem) {
+  .hero__inner {
+    padding-block: var(--space-l) var(--space-xl);
+  }
+
+  .hero__actions .button {
+    flex: 1 1 100%;
+  }
+
+  .hero__eyebrow {
+    margin-bottom: var(--space-s);
+  }
+}
+
 /* Einflug-Animation beim Laden */
 .hero__content > * {
   animation: rise 0.8s var(--ease) both;

@@ -17,6 +17,28 @@
   animation: rise 0.45s 0.4s var(--ease) both; /* Keyframes in 06-hero.css */
 }
 
+/* Handy: als Leiste am unteren Rand, über der Schnellkontakt-Leiste */
+@media (max-width: 47.99rem) {
+  .cookie-banner {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: none;
+    padding-bottom: calc(var(--space-m) + env(safe-area-inset-bottom));
+    border-inline: 0;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .has-mobile-cta .cookie-banner {
+    bottom: calc(var(--mobile-cta-h) + env(safe-area-inset-bottom));
+    padding-bottom: var(--space-m);
+  }
+
+  .cookie-banner__actions .button {
+    flex: 1;
+  }
+}
+
 .cookie-banner__title {
   margin-bottom: var(--space-xs);
   font-size: var(--fs-h3);

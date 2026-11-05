@@ -2,20 +2,26 @@
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  padding-inline: max(var(--gutter), env(safe-area-inset-left));
+}
+
+/* Jeder Abschnitt in <main> übernimmt die Farben seines Themes (siehe 01-tokens.css). */
+main > section {
+  background-color: var(--t-bg);
+  color: var(--t-text);
 }
 
 .section {
   padding-block: var(--space-xl);
 }
 
-.section--muted {
-  background: var(--c-surface);
+.section-actions {
+  margin-top: var(--space-l);
 }
 
 .split {
   display: grid;
-  gap: var(--space-l);
+  gap: var(--space-s);
 }
 
 @media (min-width: 56rem) {
@@ -30,7 +36,7 @@
 }
 
 .prose--lead {
-  color: var(--c-ink);
+  color: var(--t-heading);
   font-size: var(--fs-lg);
 }
 
@@ -45,7 +51,7 @@
 
 .eyebrow {
   margin-bottom: var(--space-xs);
-  color: var(--c-blue-dark);
+  color: var(--t-accent);
   font-size: var(--fs-sm);
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -58,12 +64,12 @@
 }
 
 .section-heading__intro {
-  color: var(--c-muted);
+  color: var(--t-muted);
   font-size: var(--fs-lg);
 }
 
 .note {
   margin-top: var(--space-l);
-  color: var(--c-muted);
+  color: var(--t-muted);
   font-size: var(--fs-sm);
 }

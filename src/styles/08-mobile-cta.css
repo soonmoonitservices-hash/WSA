@@ -1,0 +1,49 @@
+/* ---------- Schnellkontakt-Leiste (nur Handy) ---------- */
+.mobile-cta {
+  display: none;
+}
+
+@media (max-width: 47.99rem) {
+  .mobile-cta {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 80;
+    display: flex;
+    gap: var(--space-xs);
+    padding: 0.625rem var(--gutter) calc(0.625rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--c-line);
+    background: rgb(255 255 255 / 96%);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 -6px 20px rgb(10 21 54 / 10%);
+  }
+
+  .mobile-cta__btn {
+    display: flex;
+    flex: 1;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    border: 2px solid var(--c-navy);
+    border-radius: var(--radius);
+    color: var(--c-navy);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .mobile-cta__btn--primary {
+    background: var(--c-navy);
+    color: var(--c-white);
+  }
+
+  .mobile-cta__btn--primary:hover {
+    color: var(--c-white);
+  }
+
+  /* Menü offen → Leiste ausblenden */
+  .nav-open .mobile-cta {
+    display: none;
+  }
+}

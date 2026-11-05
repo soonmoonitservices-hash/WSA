@@ -36,4 +36,44 @@
   --header-h: 4.75rem;
   --shadow: 0 1px 2px rgb(16 31 77 / 6%), 0 8px 24px rgb(16 31 77 / 8%);
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --mobile-cta-h: 4.25rem;
+}
+
+/*
+ * Section-Themes. Komponenten verwenden ausschließlich die --t-* Variablen,
+ * dadurch funktionieren sie auf weißen wie auf blauen Abschnitten.
+ * Die Abschnitte in <main> wechseln automatisch: blau, weiß, blau, weiß …
+ */
+:root,
+.theme-light,
+main > section:nth-child(even),
+.card__link {
+  --t-bg: var(--c-white);
+  --t-heading: var(--c-ink);
+  --t-text: var(--c-text);
+  --t-muted: var(--c-muted);
+  --t-accent: var(--c-blue-dark);
+  --t-line: var(--c-line);
+  --t-surface: var(--c-surface);
+  --t-icon-bg: var(--c-blue-soft);
+  --t-icon-fg: var(--c-navy);
+  --t-btn-bg: var(--c-navy);
+  --t-btn-fg: var(--c-white);
+  --t-btn-hover: var(--c-blue-dark);
+}
+
+.theme-dark,
+main > section:nth-child(odd) {
+  --t-bg: var(--c-navy);
+  --t-heading: var(--c-white);
+  --t-text: rgb(255 255 255 / 84%);
+  --t-muted: rgb(255 255 255 / 72%);
+  --t-accent: var(--c-blue);
+  --t-line: rgb(255 255 255 / 16%);
+  --t-surface: rgb(255 255 255 / 7%);
+  --t-icon-bg: rgb(78 167 216 / 18%);
+  --t-icon-fg: var(--c-blue);
+  --t-btn-bg: var(--c-white);
+  --t-btn-fg: var(--c-navy);
+  --t-btn-hover: var(--c-blue-soft);
 }

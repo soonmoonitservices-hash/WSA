@@ -3,6 +3,7 @@ import { site } from '../data/site.js';
 import { cookieBanner } from '../components/cookie-banner.js';
 import { footer } from '../components/footer.js';
 import { header } from '../components/header.js';
+import { mobileCta, showMobileCta } from '../components/mobile-cta.js';
 
 const fullTitle = (title) => (title ? `${title} | ${site.name}` : `${site.name} – ${site.claim}`);
 
@@ -18,7 +19,7 @@ export const layout = ({ page, content, assets }) => {
 <html lang="${site.lang}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>${title}</title>
   <meta name="description" content="${page.description}">
   ${page.noindex ? html`<meta name="robots" content="noindex">` : ''}
@@ -34,13 +35,14 @@ export const layout = ({ page, content, assets }) => {
   <noscript><link rel="stylesheet" href="/assets/css/no-js.css"></noscript>
   <script src="${assets.js}" type="module"></script>
 </head>
-<body>
+<body ${showMobileCta(page.path) ? html`class="has-mobile-cta"` : ''}>
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
   ${header(page.path)}
   <main id="inhalt">
     ${content}
   </main>
   ${footer()}
+  ${mobileCta(page.path)}
   ${cookieBanner()}
 </body>
 </html>

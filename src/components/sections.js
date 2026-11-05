@@ -49,7 +49,7 @@ export const ctaBand = () => html`
         <h2 class="cta__title">Kontaktieren Sie uns heute für mehr Sicherheit</h2>
         <p class="cta__text">Sie interessieren sich für unsere Sicherheitsdienstleistungen oder haben spezielle Fragen? Zögern Sie nicht, uns zu kontaktieren.</p>
       </div>
-      ${button({ href: '/kontakt/', label: 'Kontakt aufnehmen', variant: 'light', withIcon: true })}
+      ${button({ href: '/kontakt/', label: 'Kontakt aufnehmen', variant: 'primary', withIcon: true })}
     </div>
   </section>
 `;

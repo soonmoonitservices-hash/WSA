@@ -4,8 +4,7 @@
   top: 0;
   z-index: 50;
   border-bottom: 1px solid var(--c-line);
-  background: rgb(255 255 255 / 96%);
-  backdrop-filter: blur(8px);
+  background: var(--c-white); /* kein backdrop-filter: sonst bezieht sich das fixierte Mobilmenü auf den Header */
 }
 
 .site-header__inner {
@@ -62,16 +61,21 @@
 /* Ohne JavaScript greift public/assets/css/no-js.css (per <noscript>). */
 @media (max-width: 52rem) {
   .nav-toggle {
-    display: block;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-right: -0.5rem;
   }
 
+  /* Vollflächiges Menü unter dem Header */
   .nav {
-    position: absolute;
-    inset: 100% 0 auto;
+    position: fixed;
+    inset: var(--header-h) 0 0;
     display: none;
-    border-bottom: 1px solid var(--c-line);
+    overflow-y: auto;
     background: var(--c-white);
-    box-shadow: var(--shadow);
+    animation: menu-in 0.2s var(--ease);
   }
 
   .nav.is-open {
@@ -80,11 +84,31 @@
 
   .nav__list {
     flex-direction: column;
-    padding: var(--space-xs) var(--gutter) var(--space-s);
+    gap: 0;
+    padding: var(--space-xs) var(--gutter) calc(var(--space-l) + env(safe-area-inset-bottom));
+  }
+
+  .nav__list li + li {
+    border-top: 1px solid var(--c-line);
   }
 
   .nav__link {
-    padding-block: 0.75rem;
+    padding: 1.1rem 0.25rem;
+    border-radius: 0;
+    font-size: 1.25rem;
+  }
+
+  .nav__link[aria-current="page"] {
+    box-shadow: inset 3px 0 0 var(--c-blue);
+    padding-left: 1rem;
+  }
+
+  .nav-open {
+    overflow: hidden;
+  }
+
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(-0.5rem); }
   }
 
   .nav-toggle[aria-expanded="true"] .nav-toggle__open {
@@ -98,6 +122,7 @@
 
 /* ---------- Footer ---------- */
 .site-footer {
+  border-top: 4px solid var(--c-blue);
   background: var(--c-navy-deep);
   color: rgb(255 255 255 / 78%);
   font-size: 0.9375rem;
@@ -154,6 +179,18 @@
   margin-top: 0.4rem;
 }
 
+/* Größere Tipp-Flächen auf Touch-Geräten */
+@media (pointer: coarse) {
+  .footer-links a {
+    display: inline-block;
+    padding-block: 0.35rem;
+  }
+
+  .footer-links li + li {
+    margin-top: 0;
+  }
+}
+
 .site-footer__contact {
   margin-top: var(--space-xs);
 }
@@ -169,7 +206,14 @@
   gap: var(--space-xs) var(--space-m);
   align-items: center;
   justify-content: space-between;
-  padding-block: var(--space-m);
+  padding-block: var(--space-m) calc(var(--space-m) + env(safe-area-inset-bottom));
+}
+
+/* Platz für die Schnellkontakt-Leiste am Handy */
+@media (max-width: 47.99rem) {
+  .has-mobile-cta .site-footer__bottom-inner {
+    padding-bottom: calc(var(--mobile-cta-h) + var(--space-m) + env(safe-area-inset-bottom));
+  }
 }
 
 .site-footer__bottom p {

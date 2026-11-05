@@ -13,16 +13,17 @@ html {
 body {
   margin: 0;
   background: var(--c-white);
-  color: var(--c-text);
+  color: var(--t-text);
   font: 400 var(--fs-base) / 1.65 var(--font);
   text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1,
 h2,
 h3 {
   margin: 0 0 var(--space-s);
-  color: var(--c-ink);
+  color: var(--t-heading);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -42,12 +43,12 @@ p {
 }
 
 a {
-  color: var(--c-blue-dark);
+  color: var(--t-accent);
   text-underline-offset: 0.2em;
 }
 
 a:hover {
-  color: var(--c-navy);
+  color: var(--t-heading);
 }
 
 img,
