@@ -30,7 +30,18 @@ export const site = {
     zip: '',
     city: '',
     phone: '',
-    email: '',
+    email: '', // Firmen-E-Mail: wird angezeigt UND empfängt die Formular-Anfragen
+  },
+
+  /**
+   * Kontaktformular auf eigenem Hosting (z. B. Hostinger, PHP):
+   * sender = Postfach auf der eigenen Domain, über das der Server die
+   * Anfragen verschickt (in hPanel → E-Mails anlegen), z. B. 'website@firma.de'.
+   * Leer = die Firmen-E-Mail (contact.email) wird auch als Absender genutzt.
+   * Antworten gehen immer direkt an den Kunden, der das Formular ausgefüllt hat.
+   */
+  form: {
+    sender: '',
   },
 
   /**

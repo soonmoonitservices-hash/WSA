@@ -13,8 +13,8 @@
 declare(strict_types=1);
 
 // ---- Konfiguration -------------------------------------------------------
-const RECIPIENT = '';          // Empfänger, z. B. 'info@wsa-sicherheit.de'
-const SENDER = '';             // Absender auf der eigenen Domain, z. B. 'website@wsa-sicherheit.de'
+const RECIPIENT = '';          // wird beim Build aus site.js (contact.email) eingetragen
+const SENDER = '';             // wird beim Build aus site.js (form.sender, sonst contact.email) eingetragen
 // --------------------------------------------------------------------------
 
 const MIN_SECONDS = 3;
