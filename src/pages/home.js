@@ -1,8 +1,11 @@
 import { html } from '../lib/html.js';
 import { site } from '../data/site.js';
 import { services } from '../data/services.js';
+import { jobs } from '../data/jobs.js';
+import { galleryItems, processSteps, strengths } from '../data/home.js';
 import { icon } from '../components/icons.js';
 import { hotline } from '../components/emergency.js';
+import { gallery } from '../components/gallery.js';
 import { button, ctaBand, sectionHeading, serviceCard, statement } from '../components/sections.js';
 
 const typedWords = ['Objektschutz', 'Veranstaltungen', 'Baustellen', 'Empfangsdienst', 'Einzelhandel', 'Alarmüberwachung'];
@@ -77,17 +80,94 @@ const servicesPreview = () => html`
   </section>
 `;
 
-const aboutTeaser = () => html`
+const inAction = () => html`
+  <section class="section">
+    <div class="container">
+      ${sectionHeading({
+        eyebrow: 'Im Einsatz',
+        title: 'Überall dort, wo Sie uns brauchen.',
+        intro: 'Vom Firmengelände über das Konzert bis zum Ladengeschäft – wir passen unseren Einsatz an Ihr Umfeld an.',
+      })}
+      ${gallery({ items: galleryItems, defaultIndex: 1, label: 'Unsere Einsatzbereiche' })}
+    </div>
+  </section>
+`;
+
+const process = () => html`
+  <section class="section">
+    <div class="container">
+      ${sectionHeading({
+        eyebrow: 'Ablauf',
+        title: 'In vier Schritten zu Ihrem Sicherheitskonzept.',
+        intro: 'Klar, persönlich und ohne Umwege – so arbeiten wir mit Ihnen zusammen.',
+      })}
+      <ol class="steps">
+        ${processSteps.map(
+          ({ icon: iconName, title, text }, i) => html`
+            <li class="step">
+              <span class="step__icon">${icon(iconName)}<span class="step__number">${i + 1}</span></span>
+              <h3 class="step__title">${title}</h3>
+              <p class="step__text">${text}</p>
+            </li>
+          `,
+        )}
+      </ol>
+    </div>
+  </section>
+`;
+
+const aroundTheClock = () => html`
+  <section class="section">
+    <div class="container media-split">
+      <figure class="media-split__image">
+        <img src="/assets/img/photos/nacht.webp" alt="Beleuchtete Straße bei Nacht" width="960" height="722" loading="lazy" decoding="async">
+        <figcaption class="media-split__badge"><span class="live-dot"></span>24/7 im Dienst</figcaption>
+      </figure>
+      <div>
+        <p class="eyebrow">Warum ${site.shortName}</p>
+        <h2>Wir sind da, wenn andere schlafen.</h2>
+        <p class="prose--lead">Nachtschicht im Objekt, Alarm am Wochenende oder kurzfristiger Personalbedarf – auf uns können Sie sich verlassen.</p>
+        <ul class="feature-list">
+          ${strengths.map(
+            ({ icon: iconName, title, text }) => html`
+              <li>
+                <span class="feature-list__icon">${icon(iconName)}</span>
+                <div><h3 class="feature-list__title">${title}</h3><p>${text}</p></div>
+              </li>
+            `,
+          )}
+        </ul>
+        ${hotline()}
+      </div>
+    </div>
+  </section>
+`;
+
+const careersTeaser = () => html`
   <section class="section">
     <div class="container split">
       <div>
-        <p class="eyebrow">Über uns</p>
-        <h2>Jung, aber keineswegs unerfahren.</h2>
+        <p class="eyebrow">Karriere</p>
+        <h2>Verstärken Sie unser Team.</h2>
+        <p>Wir suchen zuverlässige Sicherheitskräfte (m/w/d) mit Haltung und einem guten Auge für Details.</p>
+        ${button({ href: '/karriere/', label: 'Alle Stellen ansehen', variant: 'primary', withIcon: true })}
       </div>
-      <div class="prose">
-        <p>Jedes Mitglied unseres Teams bringt umfangreiche Fachkenntnisse und langjährige Erfahrung in der Sicherheitsbranche mit.</p>
-        ${button({ href: '/ueber-uns/', label: 'Mehr über uns', variant: 'text', withIcon: true })}
-      </div>
+      <ul class="job-links">
+        ${jobs.map(
+          (job) => html`
+            <li>
+              <a class="job-links__item" href="/karriere/${job.slug}/">
+                <span class="job-links__icon">${icon(job.icon)}</span>
+                <span class="job-links__text">
+                  <strong>${job.title}</strong>
+                  <small>${job.employmentTypes.join(' · ')}</small>
+                </span>
+                ${icon('arrowRight', 'icon job-links__arrow')}
+              </a>
+            </li>
+          `,
+        )}
+      </ul>
     </div>
   </section>
 `;
@@ -101,7 +181,10 @@ export default {
     ${intro()}
     ${statement('Wenn Sicherheit, dann wir.')}
     ${servicesPreview()}
-    ${aboutTeaser()}
+    ${inAction()}
+    ${process()}
+    ${aroundTheClock()}
+    ${careersTeaser()}
     ${ctaBand()}
   `,
 };

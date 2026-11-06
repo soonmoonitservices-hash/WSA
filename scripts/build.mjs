@@ -43,7 +43,7 @@ async function buildCss() {
 }
 
 /** Concatenated into one module file; main.js comes last and calls the init functions. */
-const SCRIPTS = ['cookie-banner.js', 'hero.js', 'contact-form.js', 'main.js'];
+const SCRIPTS = ['cookie-banner.js', 'hero.js', 'gallery.js', 'contact-form.js', 'main.js'];
 
 async function buildJs() {
   const parts = await Promise.all(SCRIPTS.map((f) => readFile(join(SRC, 'scripts', f), 'utf8')));

@@ -43,6 +43,9 @@ export const imprint = legalPage({
 
     <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
     <p>${field(legal.contentResponsible, 'Name, Anschrift')}</p>
+
+    <h2>Bildnachweis</h2>
+    <p>Fotos: StockSnap.io (CC0, gemeinfrei). Hintergrundvideo: Mixkit (Mixkit Stock Video Free License).</p>
   `,
 });
 

@@ -4,6 +4,8 @@
 Options -Indexes
 ServerSignature Off
 ErrorDocument 404 /404.html
+AddType image/webp .webp
+AddType application/manifest+json .webmanifest
 
 <IfModule mod_rewrite.c>
   RewriteEngine On

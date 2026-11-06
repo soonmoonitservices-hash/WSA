@@ -47,6 +47,16 @@ Sobald Straße und Ort eingetragen sind, erhalten die Stellenseiten automatisch 
 | --- | --- | --- |
 | `public/assets/video/hero-*.mp4`, `hero-poster.jpg` | [Mixkit #42342 – „Aerial shot of a city at night“](https://mixkit.co/free-stock-video/aerial-shot-of-a-city-at-night-42342/) | Mixkit Stock Video Free License (kommerziell nutzbar, keine Namensnennung nötig; nicht als Einzeldatei weiterverkaufen) |
 | `public/assets/img/logo.png` | WSA Sicherheit GmbH | Eigentum des Kunden |
+| `public/assets/img/photos/objektschutz.webp` | [StockSnap – security-surveillance-W0P0UUBX98](https://stocksnap.io/photo/security-surveillance-W0P0UUBX98) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/veranstaltungen.webp` | [StockSnap – events-concert-1ZNLM71V1J](https://stocksnap.io/photo/events-concert-1ZNLM71V1J) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/baustellen.webp` | [StockSnap – danger-fence-HYVPKXY3JP](https://stocksnap.io/photo/danger-fence-HYVPKXY3JP) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/einzelhandel.webp` | [StockSnap – shop-store-I93PW8NE0F](https://stocksnap.io/photo/shop-store-I93PW8NE0F) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/alarm.webp` | [StockSnap – cctv-camera-1VZ50RICYR](https://stocksnap.io/photo/cctv-camera-1VZ50RICYR) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/urlaubsservice.webp` | [StockSnap – keys-door-Z1TKDI29FZ](https://stocksnap.io/photo/keys-door-Z1TKDI29FZ) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/nacht.webp` | [StockSnap – night-city-MIONYWYWGU](https://stocksnap.io/photo/night-city-MIONYWYWGU) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/favicon*`, `icon-*.png`, `apple-touch-icon.png` | aus dem WSA-Logo erzeugt | Eigentum des Kunden |
+
+Alle Fotos liegen auf dem eigenen Server (keine Abhängigkeit von fremden Diensten), als WebP mit max. 960 px Breite (≈ 300 KB gesamt, lazy geladen).
 
 Das Video wurde ohne Tonspur neu kodiert (720p ≈ 1,2 MB, 360p ≈ 0,35 MB für Mobilgeräte).
 

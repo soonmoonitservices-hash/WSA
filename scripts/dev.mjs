@@ -20,8 +20,9 @@ const vercelConfig = JSON.parse(await readFile(join(ROOT, 'vercel.json'), 'utf8'
 const SECURITY_HEADERS = Object.fromEntries(
   vercelConfig.headers
     .find(({ source }) => source === '/(.*)')
-    .headers.filter(({ key }) => !['Strict-Transport-Security'].includes(key))
-    .map(({ key, value }) => [key, value.replace('; upgrade-insecure-requests', '')]),
+    // lokal ohne HTTPS-Zwang und ohne Einbett-Sperre (für die Handy-Vorschau per iframe)
+    .headers.filter(({ key }) => !['Strict-Transport-Security', 'X-Frame-Options'].includes(key))
+    .map(({ key, value }) => [key, value.replace('; upgrade-insecure-requests', '').replace("; frame-ancestors 'none'", '')]),
 );
 
 const TYPES = {
@@ -32,6 +33,8 @@ const TYPES = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.webp': 'image/webp',
+  '.ico': 'image/x-icon',
+  '.webmanifest': 'application/manifest+json',
   '.avif': 'image/avif',
   '.mp4': 'video/mp4',
   '.xml': 'application/xml',

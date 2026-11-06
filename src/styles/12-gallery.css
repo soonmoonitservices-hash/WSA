@@ -1,0 +1,205 @@
+/* ---------- Akkordeon-Galerie (Startseite) ---------- */
+.gallery {
+  --g-gap: 10px;
+  --g-radius: 16px;
+  --g-grow: 5; /* geöffnetes Panel ≈ 50 % der Breite bei 6 Bildern */
+  --g-tilt: 8deg;
+  --g-ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --g-time: 0.6s;
+
+  display: flex;
+  gap: var(--g-gap);
+  height: clamp(22rem, 30vw + 8rem, 29rem);
+  perspective: 1400px;
+}
+
+.gallery__panel {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--g-radius);
+  background: var(--c-navy-deep);
+  box-shadow: 0 10px 30px -18px rgb(0 0 0 / 80%);
+  transform-style: preserve-3d;
+  transition: flex-grow var(--g-time) var(--g-ease), transform var(--g-time) var(--g-ease);
+}
+
+.gallery__panel.is-active {
+  flex-grow: var(--g-grow);
+}
+
+.gallery__panel.is-before {
+  transform: rotateY(var(--g-tilt));
+}
+
+.gallery__panel.is-after {
+  transform: rotateY(calc(var(--g-tilt) * -1));
+}
+
+.gallery__link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: inherit;
+  color: var(--c-white);
+  text-decoration: none;
+  outline: none;
+}
+
+.gallery__link:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--c-blue);
+}
+
+.gallery__media {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--media-w, 100%);
+  min-width: 100%;
+  height: 100%;
+  filter: grayscale(1);
+  transform: translateX(calc(-50% + var(--shift, 0px)));
+  transition: transform var(--g-time) var(--g-ease), filter var(--g-time) var(--g-ease);
+}
+
+.is-active .gallery__media {
+  filter: none;
+}
+
+.gallery__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.gallery__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 35%, rgb(10 21 54 / 88%) 100%),
+    rgb(10 21 54 / 40%);
+  transition: background-color var(--g-time) var(--g-ease);
+}
+
+.is-active .gallery__overlay {
+  background:
+    linear-gradient(180deg, transparent 35%, rgb(10 21 54 / 88%) 100%),
+    rgb(10 21 54 / 0%);
+}
+
+.gallery__label {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.gallery__bar {
+  flex: 0 0 3px;
+  border-radius: 3px;
+  background: var(--c-blue);
+  box-shadow: 0 0 12px rgb(78 167 216 / 60%);
+}
+
+.gallery__text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.gallery__title {
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.4rem);
+  line-height: 1.25;
+  text-shadow: 0 2px 14px rgb(0 0 0 / 55%);
+}
+
+.gallery__desc {
+  max-width: 28rem;
+  color: rgb(255 255 255 / 82%);
+  font-size: var(--fs-sm);
+}
+
+.gallery__more {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  margin-top: 0.35rem;
+  color: var(--c-blue);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+/* Beschriftung nur im geöffneten Panel, gestaffelt eingeblendet */
+.gallery__bar,
+.gallery__title,
+.gallery__desc,
+.gallery__more {
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity calc(var(--g-time) * 0.6) var(--g-ease), transform calc(var(--g-time) * 0.6) var(--g-ease);
+}
+
+.gallery__title,
+.gallery__desc,
+.gallery__more {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.is-active .gallery__bar,
+.is-active .gallery__title,
+.is-active .gallery__desc,
+.is-active .gallery__more {
+  opacity: 1;
+  transform: none;
+  transition-duration: var(--g-time);
+}
+
+.is-active .gallery__title { transition-delay: 0.06s; }
+.is-active .gallery__desc { transition-delay: 0.12s; }
+.is-active .gallery__more { transition-delay: 0.18s; }
+
+/* Handy: senkrecht gestapelt, ohne 3D-Neigung */
+@media (max-width: 39.99rem) {
+  .gallery {
+    --g-grow: 4;
+
+    flex-direction: column;
+    height: 36rem;
+    perspective: none;
+  }
+
+  .gallery__panel.is-before,
+  .gallery__panel.is-after {
+    transform: none;
+  }
+
+  .gallery__media {
+    left: 0;
+    width: 100%;
+    transform: none;
+  }
+
+  .gallery__desc {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery *,
+  .gallery__panel {
+    transition: none !important;
+  }
+
+  .gallery__panel.is-before,
+  .gallery__panel.is-after {
+    transform: none;
+  }
+}

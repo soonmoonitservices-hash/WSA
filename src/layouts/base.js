@@ -31,7 +31,10 @@ export const layout = ({ page, content, assets }) => {
   <meta property="og:description" content="${page.description}">
   ${canonical ? html`<meta property="og:url" content="${canonical}">` : ''}
   <meta name="theme-color" content="#082f7b">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon-32.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="${assets.css}">
   <noscript><link rel="stylesheet" href="/assets/css/no-js.css"></noscript>
   <script src="${assets.js}" type="module"></script>
