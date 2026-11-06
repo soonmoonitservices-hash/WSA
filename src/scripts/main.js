@@ -35,6 +35,7 @@ function initFormStatus() {
 
 initNavigation();
 initFormStatus();
+initContactForm();
 initCookieBanner();
 initHeroVideo();
 initHeroNetwork();

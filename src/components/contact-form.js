@@ -9,16 +9,26 @@ const input = ({ name, label, type = 'text', required = false, autocomplete, max
 `;
 
 /**
- * Posts to /api/kontakt.php (see public/api). The hidden "website" field is a
- * honeypot: real users never fill it, bots usually do.
+ * Posts to /api/kontakt/ (Vercel: api/kontakt.js, Apache: public/api/kontakt.php).
+ * Spam protection without captcha: src/scripts/contact-form.js fetches a signed
+ * time token on load; "website" is a honeypot that only bots fill in.
  */
 export const contactForm = () => html`
-  <form class="form" id="formular" action="/api/kontakt.php" method="post">
+  <form class="form" id="formular" action="/api/kontakt/" method="post" data-token-url="/api/kontakt/">
+    <noscript>
+      <p class="form__status form__status--error">Zum Absenden bitte JavaScript aktivieren – oder schreiben Sie uns direkt per E-Mail oder rufen Sie an.</p>
+    </noscript>
     <div class="form__status form__status--error" data-status="error" role="alert" hidden>
       Bitte prüfen Sie Ihre Eingaben. E-Mail und Nachricht sind Pflichtfelder.
     </div>
     <div class="form__status form__status--error" data-status="limit" role="alert" hidden>
       Sie haben gerade bereits eine Nachricht gesendet. Bitte versuchen Sie es in einer Minute erneut.
+    </div>
+    <div class="form__status form__status--error" data-status="links" role="alert" hidden>
+      Ihre Nachricht enthält zu viele Links. Bitte entfernen Sie sie und senden Sie erneut.
+    </div>
+    <div class="form__status form__status--error" data-status="expired" role="alert" hidden>
+      Das Formular war zu lange geöffnet. Bitte senden Sie Ihre Nachricht erneut.
     </div>
     <div class="form__status form__status--error" data-status="server" role="alert" hidden>
       Ihre Nachricht konnte nicht gesendet werden. Bitte kontaktieren Sie uns telefonisch oder per E-Mail.
@@ -37,6 +47,7 @@ export const contactForm = () => html`
       <textarea id="nachricht" name="nachricht" rows="6" maxlength="5000" required></textarea>
     </div>
 
+    <input type="hidden" name="token" value="">
     <div class="form__honeypot" aria-hidden="true">
       <label for="website">Website</label>
       <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">

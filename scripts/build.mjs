@@ -43,7 +43,7 @@ async function buildCss() {
 }
 
 /** Concatenated into one module file; main.js comes last and calls the init functions. */
-const SCRIPTS = ['cookie-banner.js', 'hero.js', 'main.js'];
+const SCRIPTS = ['cookie-banner.js', 'hero.js', 'contact-form.js', 'main.js'];
 
 async function buildJs() {
   const parts = await Promise.all(SCRIPTS.map((f) => readFile(join(SRC, 'scripts', f), 'utf8')));
@@ -71,6 +71,16 @@ async function writeSeoFiles() {
   await writeFile(join(DIST, 'robots.txt'), `${robots.join('\n')}\n`);
 }
 
+/** RFC 9116: wohin Sicherheitslücken gemeldet werden können. Nur mit E-Mail-Adresse. */
+async function writeSecurityTxt() {
+  if (!site.contact.email) return;
+  const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
+  const lines = [`Contact: mailto:${site.contact.email}`, `Expires: ${expires}`, 'Preferred-Languages: de, en'];
+  if (site.url) lines.push(`Canonical: ${site.url}/.well-known/security.txt`);
+  await mkdir(join(DIST, '.well-known'), { recursive: true });
+  await writeFile(join(DIST, '.well-known', 'security.txt'), `${lines.join('\n')}\n`);
+}
+
 async function build() {
   const started = performance.now();
   await rm(DIST, { recursive: true, force: true });
@@ -88,6 +98,7 @@ async function build() {
   }
 
   await writeSeoFiles();
+  await writeSecurityTxt();
 
   const ms = Math.round(performance.now() - started);
   console.log(`✔ ${pages.length} Seiten nach dist/ gebaut (${ms} ms)`);

@@ -1,29 +1,46 @@
 # Apache-Konfiguration (z. B. IONOS, Strato, All-Inkl).
+# Die Sicherheits-Header entsprechen vercel.json – Änderungen bitte in beiden Dateien.
 
 Options -Indexes
+ServerSignature Off
 ErrorDocument 404 /404.html
 
-# ---- HTTPS erzwingen ------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # HTTPS erzwingen
   RewriteCond %{HTTPS} !=on
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+  # Nur GET, HEAD und POST zulassen (TRACE, PUT, DELETE … abweisen)
+  RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|POST)$
+  RewriteRule ^ - [R=405,L]
+
   # Versteckte Dateien sperren (außer .well-known)
   RewriteRule (^|/)\.(?!well-known/) - [F]
+
+  # Kontaktformular: /api/kontakt/ → PHP-Handler
+  RewriteRule ^api/kontakt/?$ api/kontakt.php [L]
 </IfModule>
 
 # ---- Sicherheits-Header -------------------------------------------------
 <IfModule mod_headers.c>
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; frame-src 'none'; worker-src 'none'; manifest-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "DENY"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), bluetooth=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=()"
   Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header always set Origin-Agent-Cluster "?1"
   Header always unset X-Powered-By
   Header unset X-Powered-By
+
+  <FilesMatch "\.php$">
+    Header always set X-Robots-Tag "noindex, nofollow"
+  </FilesMatch>
 </IfModule>
 
 # ---- Caching --------------------------------------------------------------
@@ -42,5 +59,5 @@ ErrorDocument 404 /404.html
 
 # ---- Komprimierung ------------------------------------------------------
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript image/svg+xml application/xml text/plain
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript image/svg+xml application/xml text/plain application/json
 </IfModule>
