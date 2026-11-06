@@ -5,3 +5,8 @@
   .nav { position: static; display: block; width: 100%; border: 0; box-shadow: none; }
   .nav__list { flex-direction: row; flex-wrap: wrap; padding: 0; }
 }
+/* Ohne JavaScript: Untermenü am Handy immer offen */
+@media (max-width: 52rem) {
+  .nav__submenu { display: grid !important; width: 100%; }
+  .nav__dropdown { width: 100%; }
+}

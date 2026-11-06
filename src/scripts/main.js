@@ -25,6 +25,33 @@ function initNavigation() {
   });
 }
 
+/** Untermenüs: Klick öffnet/schließt, Escape oder Klick daneben schließt. */
+function initDropdowns() {
+  const toggles = [...document.querySelectorAll('.nav__dropdown-toggle')];
+  if (!toggles.length) return;
+
+  const close = (except) =>
+    toggles.forEach((toggle) => toggle !== except && toggle.setAttribute('aria-expanded', 'false'));
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      close(toggle);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.nav__dropdown')) close();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const open = toggles.find((toggle) => toggle.getAttribute('aria-expanded') === 'true');
+    close();
+    open?.focus();
+  });
+}
+
 /** Shows the server's error message after a redirect (?status=…). */
 function initFormStatus() {
   const status = new URLSearchParams(window.location.search).get('status');
@@ -34,6 +61,7 @@ function initFormStatus() {
 }
 
 initNavigation();
+initDropdowns();
 initFormStatus();
 initContactForm();
 initGallery();

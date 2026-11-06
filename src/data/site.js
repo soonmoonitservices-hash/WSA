@@ -61,7 +61,8 @@ export const site = {
 
 export const navigation = [
   { href: '/', label: 'Startseite' },
-  { href: '/leistungen/', label: 'Leistungen' },
+  // submenu: Menüpunkt öffnet ein Untermenü statt selbst zu verlinken
+  { href: '/leistungen/', label: 'Leistungen', submenu: 'services' },
   { href: '/ueber-uns/', label: 'Über uns' },
   { href: '/karriere/', label: 'Karriere' },
   { href: '/faq/', label: 'FAQ' },
