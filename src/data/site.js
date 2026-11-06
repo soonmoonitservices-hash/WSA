@@ -18,9 +18,9 @@ export const site = {
   cookieBanner: {
     enabled: true,
     /**
-     * false = Hinweis erscheint bei jedem Seitenaufruf/Refresh.
-     * true  = Auswahl wird im Browser (localStorage) gespeichert → in der
-     *         Datenschutzerklärung erwähnen.
+     * false = Hinweis beim ersten Besuch und bei jedem Neuladen; beim Wechsel
+     *         zwischen Seiten nicht mehr (Auswahl im sessionStorage des Tabs).
+     * true  = Auswahl wird dauerhaft im Browser (localStorage) gespeichert.
      */
     rememberChoice: false,
   },

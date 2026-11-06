@@ -65,6 +65,6 @@ export const privacy = legalPage({
     <h2>4. Ihre Rechte</h2>
     ${pending('Text folgt')}
 
-    <p class="note">Diese Website verwendet keine Cookies, kein Tracking und lädt keine Inhalte von Drittanbietern.</p>
+    <p class="note">Diese Website verwendet keine Cookies, kein Tracking und lädt keine Inhalte von Drittanbietern. Ihre Auswahl im Datenschutz-Hinweis wird nur für die Dauer der Sitzung im Browser (sessionStorage) gespeichert und beim Schließen des Tabs gelöscht.</p>
   `,
 });
