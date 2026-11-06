@@ -13,7 +13,7 @@ export const site = {
   url: '',
 
   /** Externer Mitarbeiter-/Kundenlogin. Leer = Link wird ausgeblendet. */
-  loginUrl: '',
+  loginUrl: 'https://office.spn-sicherheit.de/',
 
   cookieBanner: {
     enabled: true,

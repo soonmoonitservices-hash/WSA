@@ -44,6 +44,26 @@
   box-shadow: inset 0 -2px 0 var(--c-blue);
 }
 
+/* Login (externes Portal) als abgesetzter Button */
+.nav__link--login {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-left: 0.5rem;
+  border: 1px solid var(--c-line);
+  color: var(--c-navy);
+}
+
+.nav__link--login .icon {
+  color: var(--c-blue-dark);
+}
+
+@media (min-width: 52.01rem) and (max-width: 68rem) {
+  .nav__link {
+    padding-inline: 0.6rem;
+  }
+}
+
 .nav-toggle {
   display: none;
   padding: 0.5rem;
@@ -96,6 +116,16 @@
     padding: 1.1rem 0.25rem;
     border-radius: 0;
     font-size: 1.25rem;
+  }
+
+  .nav__link--login {
+    margin: var(--space-s) 0 0;
+    padding-inline: 1rem;
+    border-radius: var(--radius);
+  }
+
+  .nav__list li.nav__login {
+    border-top: 0;
   }
 
   .nav__link[aria-current="page"] {

@@ -27,7 +27,7 @@ export const header = (currentPath) => html`
         <ul class="nav__list">
           ${navigation.map((item) => navLink(item, currentPath))}
           ${site.loginUrl
-            ? html`<li><a class="nav__link" href="${site.loginUrl}" rel="noopener">Login</a></li>`
+            ? html`<li class="nav__login"><a class="nav__link nav__link--login" href="${site.loginUrl}" rel="noopener">${icon('lock')}Login</a></li>`
             : ''}
         </ul>
       </nav>
