@@ -15,6 +15,7 @@
  * Antworten gehen immer direkt an den Absender (Reply-To).
  */
 import { createHash } from 'node:crypto';
+import { mailHtml, mailText, subjectFor } from './_lib/mail-template.js';
 import { checkContent, checkToken, createToken, isSameOrigin, LIMITS, readFields } from './_lib/guard.js';
 
 const { RESEND_API_KEY = '', MAIL_TO = '', MAIL_FROM = '', FORM_SECRET = '', MAIL_PROVIDER = 'resend' } = process.env;
@@ -48,15 +49,6 @@ const clientIp = (request) =>
     .digest('hex');
 
 // ---- E-Mail ---------------------------------------------------------------
-const LABELS = { vorname: 'Vorname', nachname: 'Nachname', email: 'E-Mail', telefon: 'Telefon', nachricht: 'Nachricht' };
-
-const SUBJECT = 'Neue Anfrage über die Website';
-
-const toText = (data) =>
-  Object.entries(LABELS)
-    .map(([key, label]) => `${label}:${key === 'nachricht' ? '\n' : ' '}${data[key] || '–'}`)
-    .join('\n');
-
 /** Resend: eigener Absender auf verifizierter Domain. */
 async function sendViaResend(data) {
   const response = await fetch('https://api.resend.com/emails', {
@@ -66,8 +58,9 @@ async function sendViaResend(data) {
       from: `WSA Website <${MAIL_FROM}>`,
       to: [MAIL_TO],
       reply_to: data.email,
-      subject: SUBJECT,
-      text: toText(data),
+      subject: subjectFor(data),
+      text: mailText(data),
+      html: mailHtml(data),
     }),
     signal: AbortSignal.timeout(8000),
   });
@@ -81,12 +74,13 @@ async function sendViaFormSubmit(data, origin) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: origin, Referer: `${origin}/kontakt/` },
     body: JSON.stringify({
+      Anliegen: data.anliegen || '–',
       Vorname: data.vorname || '–',
       Nachname: data.nachname || '–',
       'E-Mail': data.email,
       Telefon: data.telefon || '–',
       Nachricht: data.nachricht,
-      _subject: SUBJECT,
+      _subject: subjectFor(data),
       _replyto: data.email,
       _template: 'table',
       _captcha: 'false',

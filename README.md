@@ -38,7 +38,12 @@ Der Build listet alle fehlenden Angaben auf; auf der Seite erscheinen sie gelb m
    - **Vercel, aktuell (Test):** `MAIL_PROVIDER=resend`, `MAIL_TO` und `MAIL_FROM=onboarding@resend.dev` sind gesetzt, es fehlt nur `RESEND_API_KEY`. Mit dem Test-Absender `onboarding@resend.dev` stellt Resend nur an die E-Mail-Adresse des eigenen Resend-Kontos zu. Alternativ `MAIL_PROVIDER=formsubmit` (FormSubmit.co, ohne Konto – war beim Test am 06.11.2026 nicht erreichbar).
    - **Vercel, empfohlen für den Livegang:** Konto bei [resend.com](https://resend.com) anlegen, Domain verifizieren und in Vercel unter Settings → Environment Variables `MAIL_PROVIDER=resend`, `RESEND_API_KEY`, `MAIL_TO` und `MAIL_FROM` setzen. Optional `FORM_SECRET` (langer Zufallswert). Danach neu deployen.
    - Antworten auf eine Anfrage gehen in beiden Fällen direkt an den Absender (Reply-To).
-   - **Apache/PHP:** in `public/api/kontakt.php` `RECIPIENT` und `SENDER` setzen.
+   - **Hostinger (oder anderes PHP-Hosting) – ohne Vercel und ohne Resend:**
+     1. In `src/data/site.js` die Firmen-E-Mail bei `contact.email` eintragen (empfängt die Anfragen). Liegt das Postfach nicht bei Hostinger, in hPanel → E-Mails ein Postfach wie `website@domain.de` anlegen und bei `form.sender` eintragen; SPF-Eintrag für Hostinger im DNS prüfen.
+     2. `npm run build` – Empfänger und Absender werden automatisch in `dist/api/kontakt.php` eingetragen.
+     3. Inhalt von `dist/` (inkl. `.htaccess`, `.user.ini`, `.well-known`) nach `public_html/` hochladen.
+     4. hPanel: SSL aktivieren, PHP-Version auf die neueste 8.4/8.5 stellen.
+   - Die E-Mail an die Firma ist gestaltet (HTML + Text): Anliegen, Name, E-Mail, Telefon, Nachricht, Knöpfe „Jetzt antworten“ und „Anrufen“.
 4. `src/data/jobs.js` und `src/data/faq.js`: Stellen, Beschäftigungsarten, „Wir bieten“ und FAQ-Antworten mit der Geschäftsführung abstimmen.
 
 Sobald Straße und Ort eingetragen sind, erhalten die Stellenseiten automatisch Google-for-Jobs-Daten (JobPosting).
@@ -78,7 +83,8 @@ Das Video wurde ohne Tonspur neu kodiert (720p ≈ 1,2 MB, 360p ≈ 0,35 MB für
 
 - Strenge Content-Security-Policy mit Trusted Types, HSTS, Clickjacking-, MIME- und Cross-Origin-Schutz (`vercel.json` und `public/.htaccess` – beide gleich halten). Der Dev-Server sendet dieselben Header.
 - Kein Inline-JavaScript/-CSS, keine externen Skripte, Schriften oder Tracker, keine npm-Abhängigkeiten.
-- Apache: nur GET/HEAD/POST, keine Verzeichnislisten, versteckte Dateien gesperrt.
+- Apache/LiteSpeed: nur GET/HEAD/POST, keine Verzeichnislisten, versteckte Dateien gesperrt, PHP wird nur für `api/kontakt.php` ausgeführt.
+- PHP2Shell (CVE-2026-109618/-109619, Okt./Nov. 2026): Die Lücke steckt in PHP selbst. Abhilfe: beim Hoster eine gepatchte Version wählen (mind. 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12). Zusätzlich setzt `public/.user.ini` `session.upload_progress.enabled = 0` und kleine Anfragelimits; `kontakt.php` schreibt eine Warnung ins Fehlerprotokoll, wenn die PHP-Version noch anfällig ist. Die Vercel-Variante nutzt kein PHP.
 - `/.well-known/security.txt` wird erzeugt, sobald eine E-Mail-Adresse eingetragen ist.
 - Kontaktformular – Spam-Schutz ohne Captcha:
   - signiertes Zeit-Token (holt das Script beim Laden; Absenden frühestens nach 3 s, höchstens nach 6 h)

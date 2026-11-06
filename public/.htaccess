@@ -21,6 +21,10 @@ AddType application/manifest+json .webmanifest
   # Versteckte Dateien sperren (außer .well-known)
   RewriteRule (^|/)\.(?!well-known/) - [F]
 
+  # PHP nur für das Kontaktformular ausführen – jede andere PHP-Datei sperren
+  # (z. B. eingeschleuste Dateien; kleinere Angriffsfläche bei PHP-Lücken wie PHP2Shell)
+  RewriteRule ^(?!api/kontakt\.php$).*\.(php\d?|phtml|pht|phar)$ - [F,L]
+
   # Kontaktformular: /api/kontakt/ → PHP-Handler
   RewriteRule ^api/kontakt/?$ api/kontakt.php [L]
 </IfModule>

@@ -12,7 +12,11 @@ export const LIMITS = {
   maxBodyBytes: 20_000,
 };
 
+/** Auswahl „Worum geht es?“ – nur diese Werte werden übernommen (auch in kontakt.php). */
+export const TOPICS = ['Objektschutz', 'Veranstaltung', 'Baustelle', 'Einzelhandel', 'Alarm & Intervention', 'Sonstiges'];
+
 const FIELDS = {
+  anliegen: 40,
   vorname: 100,
   nachname: 100,
   email: 254,
@@ -59,6 +63,7 @@ export function readFields(params) {
     const value = clean(params.get(name), max);
     data[name] = name === 'nachricht' ? value : singleLine(value);
   }
+  if (!TOPICS.includes(data.anliegen)) data.anliegen = '';
   return data;
 }
 
