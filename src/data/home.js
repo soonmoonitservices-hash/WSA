@@ -4,12 +4,12 @@
 const photo = (name, width, height) => ({ image: `/assets/img/photos/${name}.webp`, width, height });
 
 export const galleryItems = [
-  { ...photo('objektschutz', 960, 720), label: 'Objektschutz', text: 'Gebäude, Gelände und Werte – geschützt bei Tag und Nacht.', href: '/leistungen/#objektschutz' },
-  { ...photo('veranstaltungen', 960, 640), label: 'Veranstaltungen', text: 'Konzerte, Messen und Firmenfeiern sicher und störungsfrei.', href: '/leistungen/#veranstaltungen' },
-  { ...photo('baustellen', 960, 606), label: 'Baustellen', text: 'Schutz vor Diebstahl, Vandalismus und unbefugtem Zutritt.', href: '/leistungen/#baustellen' },
-  { ...photo('einzelhandel', 960, 640), label: 'Einzelhandel', text: 'Doormen und ShopGuards für Ihr Geschäft und Ihre Kunden.', href: '/leistungen/#einzelhandel' },
-  { ...photo('alarm', 960, 640), label: 'Alarm & Intervention', text: 'Schnelle Reaktion, wenn der Alarm auslöst.', href: '/leistungen/#alarm' },
-  { ...photo('urlaubsservice', 960, 640), label: 'Urlaubsservice', text: 'Wir behalten Ihr Zuhause im Blick, während Sie verreisen.', href: '/leistungen/#urlaubsservice' },
+  { ...photo('objektschutz', 960, 720), label: 'Objektschutz', text: 'Gebäude, Gelände und Werte – geschützt bei Tag und Nacht.', href: '/leistungen/objektschutz/' },
+  { ...photo('veranstaltungen', 960, 640), label: 'Veranstaltungen', text: 'Konzerte, Messen und Firmenfeiern sicher und störungsfrei.', href: '/leistungen/veranstaltungen/' },
+  { ...photo('baustellen', 960, 606), label: 'Baustellen', text: 'Schutz vor Diebstahl, Vandalismus und unbefugtem Zutritt.', href: '/leistungen/baustellen/' },
+  { ...photo('einzelhandel', 960, 640), label: 'Einzelhandel', text: 'Doormen und ShopGuards für Ihr Geschäft und Ihre Kunden.', href: '/leistungen/einzelhandel/' },
+  { ...photo('alarm', 960, 640), label: 'Alarm & Intervention', text: 'Schnelle Reaktion, wenn der Alarm auslöst.', href: '/leistungen/alarm/' },
+  { ...photo('urlaubsservice', 960, 640), label: 'Urlaubsservice', text: 'Wir behalten Ihr Zuhause im Blick, während Sie verreisen.', href: '/leistungen/urlaubsservice/' },
 ];
 
 export const processSteps = [

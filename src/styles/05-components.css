@@ -219,31 +219,67 @@
 }
 
 .service {
-  display: flex;
-  gap: var(--space-m);
-  padding-top: var(--space-l);
   border-top: 1px solid var(--t-line);
 }
 
-.service:target .service__icon {
-  background: var(--t-btn-bg);
-  color: var(--t-btn-fg);
+/* Ganze Zeile ist der Link zur Leistungsseite */
+.service__link {
+  display: flex;
+  gap: var(--space-m);
+  height: 100%;
+  padding-top: var(--space-l);
+  color: var(--t-text);
+  text-decoration: none;
+}
+
+.service__link:hover {
+  color: var(--t-text);
 }
 
 .service__icon {
   margin: 0;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .service__title {
   font-size: clamp(1.1875rem, 1rem + 0.6vw, 1.375rem);
+  transition: color 0.15s var(--ease);
 }
 
 .service p {
   margin: 0;
 }
 
+.service__more {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: var(--space-s);
+  color: var(--t-accent);
+  font-weight: 600;
+}
+
+.service__more .icon {
+  transition: transform 0.15s var(--ease);
+}
+
+@media (hover: hover) {
+  .service__link:hover .service__icon {
+    background: var(--t-btn-bg);
+    color: var(--t-btn-fg);
+  }
+
+  .service__link:hover .service__title {
+    color: var(--t-accent);
+  }
+
+  .service__link:hover .service__more .icon {
+    transform: translateX(3px);
+  }
+}
+
 @media (max-width: 39.99rem) {
-  .service {
+  .service__link {
     flex-direction: column;
     gap: var(--space-s);
     padding-top: var(--space-m);

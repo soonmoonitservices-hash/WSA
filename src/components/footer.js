@@ -1,6 +1,6 @@
 import { html } from '../lib/html.js';
 import { legalNavigation, navigation, site } from '../data/site.js';
-import { services } from '../data/services.js';
+import { servicePath, services } from '../data/services.js';
 import { address, emailLink, phoneLink } from './contact-details.js';
 import { logo } from './logo.js';
 
@@ -25,7 +25,7 @@ export const footer = () => html`
 
       <nav aria-label="Leistungen">
         <h2 class="site-footer__title">Leistungen</h2>
-        ${linkList(services.slice(0, 5).map(({ slug, title }) => ({ href: `/leistungen/#${slug}`, label: title })))}
+        ${linkList(services.slice(0, 5).map((service) => ({ href: servicePath(service), label: service.title })))}
       </nav>
 
       <div>

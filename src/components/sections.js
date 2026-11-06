@@ -1,5 +1,6 @@
 import { html } from '../lib/html.js';
 import { icon } from './icons.js';
+import { servicePath } from '../data/services.js';
 
 export const button = ({ href, label, variant = 'primary', withIcon = false }) => html`
   <a class="button button--${variant}" href="${href}">
@@ -26,12 +27,12 @@ export const sectionHeading = ({ eyebrow, title, intro, id }) => html`
   </header>
 `;
 
-export const serviceCard = ({ slug, icon: iconName, title, text }) => html`
+export const serviceCard = (service) => html`
   <li class="card">
-    <a class="card__link" href="/leistungen/#${slug}">
-      <span class="card__icon">${icon(iconName)}</span>
-      <h3 class="card__title">${title}</h3>
-      <p class="card__text">${text}</p>
+    <a class="card__link" href="${servicePath(service)}">
+      <span class="card__icon">${icon(service.icon)}</span>
+      <h3 class="card__title">${service.title}</h3>
+      <p class="card__text">${service.text}</p>
     </a>
   </li>
 `;

@@ -45,7 +45,7 @@ export const imprint = legalPage({
     <p>${field(legal.contentResponsible, 'Name, Anschrift')}</p>
 
     <h2>Bildnachweis</h2>
-    <p>Fotos: StockSnap.io (CC0, gemeinfrei). Hintergrundvideo: Mixkit (Mixkit Stock Video Free License).</p>
+    <p>Fotos: StockSnap.io und Wikimedia Commons (CC0, gemeinfrei). Hintergrundvideo: Mixkit (Mixkit Stock Video Free License).</p>
   `,
 });
 

@@ -14,7 +14,7 @@ Den Inhalt von `dist/` per FTP/SFTP auf den Webspace laden (Apache mit PHP ≥ 8
 ```
 src/
   data/site.js        Firmendaten, Navigation, Cookie-Hinweis   ← hier Daten eintragen
-  data/services.js    Leistungen (Startseite + Leistungsseite)
+  data/services.js    Leistungen – jede bekommt eine Seite unter /leistungen/<slug>/ (Texte, Aufgaben, Bilder)
   data/jobs.js        Stellenangebote – jede Stelle bekommt eine Seite unter /karriere/<slug>/
   data/faq.js         Häufige Fragen (/faq/)
   pages/              eine Datei pro Seite, Registrierung in pages/index.js
@@ -54,9 +54,21 @@ Sobald Straße und Ort eingetragen sind, erhalten die Stellenseiten automatisch 
 | `public/assets/img/photos/alarm.webp` | [StockSnap – cctv-camera-1VZ50RICYR](https://stocksnap.io/photo/cctv-camera-1VZ50RICYR) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
 | `public/assets/img/photos/urlaubsservice.webp` | [StockSnap – keys-door-Z1TKDI29FZ](https://stocksnap.io/photo/keys-door-Z1TKDI29FZ) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
 | `public/assets/img/photos/nacht.webp` | [StockSnap – night-city-MIONYWYWGU](https://stocksnap.io/photo/night-city-MIONYWYWGU) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/objektschutz-2.webp` | [StockSnap – industrial-building-KUVPJ1G06U](https://stocksnap.io/photo/industrial-building-KUVPJ1G06U) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/veranstaltungen-2.webp` | [StockSnap – bluesfest-festival-6ZMXTUJ92C](https://stocksnap.io/photo/bluesfest-festival-6ZMXTUJ92C) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/baustellen-2.webp` | [StockSnap – construction-site-KSN9ULCSVX](https://stocksnap.io/photo/construction-site-KSN9ULCSVX) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/empfang.webp` | [StockSnap – staircase-interior-CIMIPMHUXZ](https://stocksnap.io/photo/staircase-interior-CIMIPMHUXZ) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/empfang-2.webp` | [StockSnap – sunlight-couch-NB6ISAF275](https://stocksnap.io/photo/sunlight-couch-NB6ISAF275) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/alarm-2.webp` | [StockSnap – security-surveillance-E8U0GNCPI8](https://stocksnap.io/photo/security-surveillance-E8U0GNCPI8) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/einzelhandel-2.webp` | [StockSnap – shop-store-XPBFSRZRLM](https://stocksnap.io/photo/shop-store-XPBFSRZRLM) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/einlass.webp` | [StockSnap – concert-festival-4CNNMKE9IQ](https://stocksnap.io/photo/concert-festival-4CNNMKE9IQ) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/einlass-2.webp` | [StockSnap – crowd-people-IUJP9OI22I](https://stocksnap.io/photo/crowd-people-IUJP9OI22I) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/urlaubsservice-2.webp` | [StockSnap – house-home-LJ515CPAKI](https://stocksnap.io/photo/house-home-LJ515CPAKI) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/unterkuenfte-2.webp` | [StockSnap – warehouse-building-2EEE2092E1](https://stocksnap.io/photo/warehouse-building-2EEE2092E1) | CC0 1.0 (gemeinfrei, unwiderruflich, keine Namensnennung nötig) |
+| `public/assets/img/photos/unterkuenfte.webp` | [Wikimedia Commons – Shipping Container Houses, Brighton (Hassocks5489)](https://commons.wikimedia.org/wiki/File:Shipping_Container_Houses,_New_England_Road,_Brighton_(December_2013)_(1).jpg) | CC0 1.0 |
 | `public/favicon*`, `icon-*.png`, `apple-touch-icon.png` | aus dem WSA-Logo erzeugt | Eigentum des Kunden |
 
-Alle Fotos liegen auf dem eigenen Server (keine Abhängigkeit von fremden Diensten), als WebP mit max. 960 px Breite (≈ 300 KB gesamt, lazy geladen).
+Alle Fotos liegen auf dem eigenen Server (keine Abhängigkeit von fremden Diensten), als WebP mit max. 960 px Breite (lazy geladen).
 
 Das Video wurde ohne Tonspur neu kodiert (720p ≈ 1,2 MB, 360p ≈ 0,35 MB für Mobilgeräte).
 

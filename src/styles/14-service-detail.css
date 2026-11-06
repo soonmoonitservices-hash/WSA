@@ -1,0 +1,57 @@
+/* ---------- Leistungsseiten ---------- */
+@media (min-width: 56rem) {
+  .media-split--reverse > :first-child {
+    order: 2;
+  }
+}
+
+.service-detail__subtitle {
+  margin-top: var(--space-l);
+  font-size: var(--fs-h3);
+}
+
+/* Einsatzorte als Schlagwörter */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-list li {
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--t-line);
+  border-radius: 999px;
+  background: var(--t-surface);
+  color: var(--t-heading);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.note-box {
+  margin-block: var(--space-l);
+  padding: var(--space-m);
+  border-left: 3px solid var(--c-blue);
+  border-radius: var(--radius);
+  background: var(--t-surface);
+}
+
+.note-box p {
+  margin: 0;
+}
+
+.note-box .note-box__title {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  color: var(--t-heading);
+  font-weight: 600;
+}
+
+.note-box__title .icon {
+  color: var(--t-accent);
+}
+
+.checklist + .hotline {
+  margin-top: var(--space-l);
+}
