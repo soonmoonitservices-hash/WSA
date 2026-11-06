@@ -3,20 +3,21 @@ import { site } from '../data/site.js';
 import { cookieBanner } from '../components/cookie-banner.js';
 import { footer } from '../components/footer.js';
 import { header } from '../components/header.js';
+import { showEmergency } from '../components/emergency.js';
 import { mobileCta, showMobileCta } from '../components/mobile-cta.js';
 
 const fullTitle = (title) => (title ? `${title} | ${site.name}` : `${site.name} – ${site.claim}`);
 
 /**
  * @param {{ page: { path: string, title?: string, description: string, noindex?: boolean },
- *           content: unknown, assets: { css: string, js: string } }} props
+ *           structuredData?: () => unknown, content: unknown, assets: { css: string, js: string } }} props
  */
 export const layout = ({ page, content, assets }) => {
   const canonical = site.url ? site.url + page.path : '';
   const title = fullTitle(page.title);
 
   return html`<!doctype html>
-<html lang="${site.lang}">
+<html lang="${site.lang}"${showEmergency ? html` class="has-topbar"` : ''}>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -34,6 +35,7 @@ export const layout = ({ page, content, assets }) => {
   <link rel="stylesheet" href="${assets.css}">
   <noscript><link rel="stylesheet" href="/assets/css/no-js.css"></noscript>
   <script src="${assets.js}" type="module"></script>
+  ${page.structuredData ? page.structuredData() : ''}
 </head>
 <body ${showMobileCta(page.path) ? html`class="has-mobile-cta"` : ''}>
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>

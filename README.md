@@ -15,6 +15,8 @@ Den Inhalt von `dist/` per FTP/SFTP auf den Webspace laden (Apache mit PHP ≥ 8
 src/
   data/site.js        Firmendaten, Navigation, Cookie-Hinweis   ← hier Daten eintragen
   data/services.js    Leistungen (Startseite + Leistungsseite)
+  data/jobs.js        Stellenangebote – jede Stelle bekommt eine Seite unter /karriere/<slug>/
+  data/faq.js         Häufige Fragen (/faq/)
   pages/              eine Datei pro Seite, Registrierung in pages/index.js
   components/         Header, Footer, Formular, Abschnitte, Icons
   layouts/base.js     HTML-Grundgerüst (Head, Meta, Header/Footer)
@@ -29,9 +31,12 @@ scripts/              Build & Dev-Server
 
 Der Build listet alle fehlenden Angaben auf; auf der Seite erscheinen sie gelb markiert.
 
-1. `src/data/site.js`: Adresse, Telefon, E-Mail, `url` (Domain), Impressumsdaten, ggf. Öffnungszeiten und Login-URL.
+1. `src/data/site.js`: Adresse, Telefon, E-Mail, 24h-Notrufnummer (`emergency.phone`), `url` (Domain), Impressumsdaten, ggf. Öffnungszeiten und Login-URL.
 2. `src/pages/legal.js`: Texte der Datenschutzerklärung.
 3. `public/api/kontakt.php`: `RECIPIENT` und `SENDER` setzen.
+4. `src/data/jobs.js` und `src/data/faq.js`: Stellen, Beschäftigungsarten, „Wir bieten“ und FAQ-Antworten mit der Geschäftsführung abstimmen.
+
+Sobald Straße und Ort eingetragen sind, erhalten die Stellenseiten automatisch Google-for-Jobs-Daten (JobPosting).
 
 ## Medien & Lizenzen
 

@@ -2,7 +2,7 @@
 /* Ebenen: Video (0) → Navy-Verlauf (1) → Partikel/Linien (2) → Inhalt (3) */
 .hero {
   isolation: isolate;
-  min-height: min(52rem, calc(100svh - var(--header-h)));
+  min-height: min(52rem, calc(100svh - var(--sticky-h)));
   display: grid;
   align-items: center;
   background: var(--c-navy-deep) url("/assets/video/hero-poster.jpg") center / cover no-repeat;
@@ -169,6 +169,7 @@
 .hero__content > :nth-child(2) { animation-delay: 0.1s; }
 .hero__content > :nth-child(3) { animation-delay: 0.25s; }
 .hero__content > :nth-child(4) { animation-delay: 0.4s; }
+.hero__content > :nth-child(5) { animation-delay: 0.55s; }
 
 /* ---------- Radar ---------- */
 .radar {

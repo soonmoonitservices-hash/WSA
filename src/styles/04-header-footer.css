@@ -71,7 +71,7 @@
   /* Vollflächiges Menü unter dem Header */
   .nav {
     position: fixed;
-    inset: var(--header-h) 0 0;
+    inset: var(--sticky-h) 0 0;
     display: none;
     overflow-y: auto;
     background: var(--c-white);

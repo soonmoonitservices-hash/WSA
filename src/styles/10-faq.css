@@ -1,0 +1,101 @@
+/* ---------- FAQ: Akkordeon mit <details>, funktioniert ohne JavaScript ---------- */
+.faq {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.faq__group {
+  display: grid;
+  gap: var(--space-s);
+}
+
+@media (min-width: 56rem) {
+  .faq__group {
+    grid-template-columns: 4fr 8fr;
+    gap: var(--space-xl);
+  }
+}
+
+.faq__group-title {
+  font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem);
+}
+
+.faq__list {
+  border-top: 1px solid var(--t-line);
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--t-line);
+}
+
+.faq__question {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.1rem;
+  color: var(--t-heading);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.35;
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq__question:hover {
+  color: var(--t-accent);
+}
+
+/* Plus, das sich beim Öffnen zum Minus dreht */
+.faq__toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--t-icon-bg);
+  color: var(--t-icon-fg);
+}
+
+.faq__toggle::before,
+.faq__toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.8rem;
+  height: 2px;
+  margin: -1px 0 0 -0.4rem;
+  background: currentcolor;
+  transition: transform 0.2s var(--ease);
+}
+
+.faq__toggle::after {
+  transform: rotate(90deg);
+}
+
+.faq__item[open] .faq__toggle::after {
+  transform: rotate(0deg);
+}
+
+.faq__answer {
+  max-width: 44rem;
+  padding-bottom: var(--space-m);
+  animation: rise 0.3s var(--ease);
+}
+
+.faq__answer p {
+  margin-bottom: var(--space-xs);
+}
+
+.faq__link {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-weight: 600;
+  text-decoration: none;
+}

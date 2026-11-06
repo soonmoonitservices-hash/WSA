@@ -33,6 +33,15 @@ export const site = {
     email: '',
   },
 
+  /**
+   * 24h-Notruf: erscheint oben auf jeder Seite, im Hero und auf der Kontaktseite.
+   * enabled: false blendet ihn komplett aus.
+   */
+  emergency: {
+    enabled: true,
+    phone: '',
+  },
+
   /** Leer lassen, solange die Zeiten nicht feststehen – der Block wird dann ausgeblendet. */
   openingHours: [
     // { days: 'Mo–Do', time: '9:00–17:00 Uhr' },
@@ -55,6 +64,7 @@ export const navigation = [
   { href: '/leistungen/', label: 'Leistungen' },
   { href: '/ueber-uns/', label: 'Über uns' },
   { href: '/karriere/', label: 'Karriere' },
+  { href: '/faq/', label: 'FAQ' },
   { href: '/kontakt/', label: 'Kontakt' },
 ];
 

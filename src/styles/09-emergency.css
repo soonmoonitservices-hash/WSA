@@ -1,0 +1,146 @@
+/* ---------- 24h-Notruf: Leiste über dem Header, Hero-Zeile, Kontakt-Box ---------- */
+.has-topbar {
+  --topbar-h: 2.25rem;
+}
+
+.topbar {
+  background: var(--c-navy-deep);
+  color: rgb(255 255 255 / 80%);
+  font-size: var(--fs-sm);
+}
+
+.topbar__inner {
+  display: flex;
+  gap: var(--space-s);
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-h);
+}
+
+.topbar p {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.topbar__hotline {
+  color: var(--c-white);
+  font-weight: 600;
+}
+
+.topbar__hotline .icon {
+  color: var(--c-blue);
+}
+
+.topbar a {
+  color: var(--c-white);
+  text-decoration: none;
+}
+
+.topbar a:hover {
+  color: var(--c-blue);
+}
+
+@media (max-width: 39.99rem) {
+  .topbar .topbar__note {
+    display: none;
+  }
+
+  .topbar__inner {
+    justify-content: center;
+  }
+}
+
+/* Pulsierender grüner Punkt = „erreichbar“ */
+.live-dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #3ddc84;
+}
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: ping 1.8s var(--ease) infinite; /* Keyframes in 06-hero.css */
+}
+
+.hotline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0;
+  color: var(--t-text);
+}
+
+.hotline .icon {
+  color: var(--c-blue);
+}
+
+.hotline a {
+  color: var(--t-heading);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hero__hotline {
+  margin-top: var(--space-m);
+}
+
+.emergency-panel {
+  padding: var(--space-m);
+  border-left: 4px solid var(--c-blue);
+  border-radius: var(--radius);
+  background: var(--c-navy);
+  color: rgb(255 255 255 / 84%);
+}
+
+.emergency-panel p {
+  margin: 0;
+}
+
+.emergency-panel__title {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  color: var(--c-blue);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.emergency-panel .emergency-panel__number {
+  margin-block: 0.4rem 0.6rem;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  font-weight: 600;
+}
+
+.emergency-panel__number a {
+  color: var(--c-white);
+  text-decoration: none;
+}
+
+.emergency-panel__text {
+  font-size: var(--fs-sm);
+}
+
+.contact-aside {
+  display: grid;
+  align-content: start;
+  gap: var(--space-l);
+}
+
+.contact-aside__faq {
+  margin: 0;
+  color: var(--t-muted);
+}

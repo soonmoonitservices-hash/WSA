@@ -2,6 +2,7 @@ import { html } from '../lib/html.js';
 import { navigation, site } from '../data/site.js';
 import { icon } from './icons.js';
 import { logo } from './logo.js';
+import { topbar } from './emergency.js';
 
 const isActive = (href, currentPath) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
@@ -14,6 +15,7 @@ const navLink = ({ href, label }, currentPath) => html`
 
 export const header = (currentPath) => html`
   <header class="site-header">
+    ${topbar()}
     <div class="container site-header__inner">
       ${logo()}
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">

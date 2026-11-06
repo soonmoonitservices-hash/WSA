@@ -2,6 +2,7 @@ import { html } from '../lib/html.js';
 import { site } from '../data/site.js';
 import { contactDetails } from '../components/contact-details.js';
 import { contactForm } from '../components/contact-form.js';
+import { emergencyPanel } from '../components/emergency.js';
 import { pageHero } from '../components/sections.js';
 
 export default {
@@ -17,7 +18,11 @@ export default {
     <section class="section">
       <div class="container contact-layout">
         ${contactForm()}
-        <aside aria-label="Kontaktdaten">${contactDetails()}</aside>
+        <aside class="contact-aside" aria-label="Kontaktdaten">
+          ${emergencyPanel()}
+          ${contactDetails()}
+          <p class="contact-aside__faq">Fragen zu Ablauf oder Kosten? <a href="/faq/">Häufige Fragen</a></p>
+        </aside>
       </div>
     </section>
   `,

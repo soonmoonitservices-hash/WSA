@@ -1,0 +1,55 @@
+/* ---------- Stellenangebote ---------- */
+.card-grid--jobs {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+}
+
+.card-grid--jobs .card__text {
+  margin-bottom: var(--space-s);
+}
+
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  color: var(--t-muted);
+  font-size: var(--fs-sm);
+}
+
+.job-meta li {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.job-meta .icon {
+  color: var(--t-accent);
+}
+
+.card__more {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: auto;
+  padding-top: var(--space-m);
+  color: var(--t-accent);
+  font-weight: 600;
+}
+
+.page-hero .job-meta {
+  margin-top: var(--space-m);
+  font-size: var(--fs-base);
+}
+
+.page-hero__actions {
+  margin-top: var(--space-l);
+}
+
+.back-link {
+  color: inherit;
+}
+
+@media (max-width: 39.99rem) {
+  .page-hero__actions .button {
+    width: 100%;
+  }
+}

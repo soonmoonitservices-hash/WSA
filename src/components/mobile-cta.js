@@ -8,7 +8,8 @@ export const showMobileCta = (path) => !path.startsWith('/kontakt/');
 
 export const mobileCta = (path) => {
   if (!showMobileCta(path)) return '';
-  const { phone } = site.contact;
+  // Notrufnummer bevorzugen, sonst die normale Telefonnummer
+  const phone = (site.emergency.enabled && site.emergency.phone) || site.contact.phone;
 
   return html`
     <nav class="mobile-cta" aria-label="Schnellkontakt">

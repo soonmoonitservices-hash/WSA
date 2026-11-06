@@ -24,10 +24,18 @@ main > section {
   gap: var(--space-s);
 }
 
+.split--even {
+  gap: var(--space-l);
+}
+
 @media (min-width: 56rem) {
   .split {
     grid-template-columns: 5fr 7fr;
     gap: var(--space-xl);
+  }
+
+  .split--even {
+    grid-template-columns: 1fr 1fr;
   }
 }
 

@@ -2,6 +2,7 @@ import { html } from '../lib/html.js';
 import { site } from '../data/site.js';
 import { services } from '../data/services.js';
 import { icon } from '../components/icons.js';
+import { hotline } from '../components/emergency.js';
 import { button, ctaBand, sectionHeading, serviceCard, statement } from '../components/sections.js';
 
 const typedWords = ['Objektschutz', 'Veranstaltungen', 'Baustellen', 'Empfangsdienst', 'Einzelhandel', 'Alarmüberwachung'];
@@ -37,6 +38,7 @@ const hero = () => html`
           ${button({ href: '/leistungen/', label: 'Unsere Leistungen', variant: 'primary', withIcon: true })}
           ${button({ href: '/kontakt/', label: 'Kontakt aufnehmen', variant: 'outline' })}
         </div>
+        ${hotline('hotline hero__hotline')}
       </div>
       ${radar()}
     </div>
