@@ -21,7 +21,7 @@ const FIELDS = {
   nachname: 100,
   email: 254,
   telefon: 40,
-  nachricht: 5000,
+  nachricht: 500,
 };
 
 const sign = (secret, value) => createHmac('sha256', secret).update(value).digest('base64url');

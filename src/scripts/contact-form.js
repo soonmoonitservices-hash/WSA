@@ -28,13 +28,13 @@ function initContactForm() {
     submitLabel.textContent = sending ? 'Wird gesendet …' : idleLabel;
   };
 
-  // Zeichenzähler: erscheint erst ab 80 % des Limits
+  // Zeichenzähler: wird ab 90 % des Limits hervorgehoben
   form.querySelectorAll('[data-count-for]').forEach((counter) => {
     const field = form.elements.namedItem(counter.dataset.countFor);
     const update = () => {
       const { length } = field.value;
       counter.textContent = `${length} / ${field.maxLength}`;
-      counter.hidden = length < field.maxLength * 0.8;
+      counter.classList.toggle('is-near', length >= field.maxLength * 0.9);
     };
     field.addEventListener('input', update);
     update();

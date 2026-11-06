@@ -12,10 +12,28 @@
  */
 declare(strict_types=1);
 
-// ---- Konfiguration -------------------------------------------------------
-const RECIPIENT = '';          // wird beim Build aus site.js (contact.email) eingetragen
-const SENDER = '';             // wird beim Build aus site.js (form.sender, sonst contact.email) eingetragen
-// --------------------------------------------------------------------------
+// ---- Empfänger: steht NIE im Code ------------------------------------------
+// Wird gelesen aus (1) Server-Umgebungsvariablen WSA_MAIL_TO / WSA_MAIL_FROM oder
+// (2) der Datei wsa-kontakt.php EINE Ebene ÜBER dem Web-Ordner (public_html) –
+//     dort ist sie aus dem Internet nicht erreichbar. Vorlage: config/wsa-kontakt.example.php
+function mailConfig(): array
+{
+    $config = ['to' => (string) getenv('WSA_MAIL_TO'), 'from' => (string) getenv('WSA_MAIL_FROM')];
+    $file = dirname(__DIR__, 2) . '/wsa-kontakt.php';
+    if ($config['to'] === '' && is_file($file) && is_readable($file)) {
+        $loaded = require $file;
+        if (is_array($loaded)) {
+            $config = ['to' => (string) ($loaded['to'] ?? ''), 'from' => (string) ($loaded['from'] ?? '')];
+        }
+    }
+    if ($config['from'] === '') {
+        $config['from'] = $config['to'];
+    }
+    // FILTER_VALIDATE_EMAIL lässt keine Zeilenumbrüche zu → keine Header-Injection
+    $valid = static fn (string $v): bool => filter_var($v, FILTER_VALIDATE_EMAIL) !== false;
+    return $valid($config['to']) && $valid($config['from']) ? $config : ['to' => '', 'from' => ''];
+}
+// ---------------------------------------------------------------------------
 
 const MIN_SECONDS = 3;
 const MAX_SECONDS = 6 * 60 * 60;
@@ -147,7 +165,7 @@ $data = [
     'Nachname'  => input('nachname', 100),
     'E-Mail'    => input('email', 254),
     'Telefon'   => input('telefon', 40),
-    'Nachricht' => input('nachricht', 5000, false),
+    'Nachricht' => input('nachricht', 500, false),
 ];
 
 $email = filter_var($data['E-Mail'], FILTER_VALIDATE_EMAIL);
@@ -171,8 +189,9 @@ if (preg_match_all('/(https?:\/\/|www\.)\S+/i', $data['Nachricht']) > MAX_LINKS)
     redirect('links');
 }
 
-if (RECIPIENT === '' || SENDER === '') {
-    error_log('kontakt.php: RECIPIENT/SENDER nicht konfiguriert.');
+$mail = mailConfig();
+if ($mail['to'] === '') {
+    error_log('kontakt.php: Empfänger nicht konfiguriert (wsa-kontakt.php über public_html oder WSA_MAIL_TO).');
     redirect('server');
 }
 
@@ -263,16 +282,16 @@ $part = fn (string $type, string $content): string =>
     . chunk_split(base64_encode($content)) . "\r\n";
 
 $sent = mail(
-    RECIPIENT,
+    $mail['to'],
     mb_encode_mimeheader($subject, 'UTF-8'),
     $part('text/plain', $text) . $part('text/html', $html) . '--' . $boundary . '--',
     [
-        'From'         => mb_encode_mimeheader('WSA Website', 'UTF-8') . ' <' . SENDER . '>',
+        'From'         => mb_encode_mimeheader('WSA Website', 'UTF-8') . ' <' . $mail['from'] . '>',
         'Reply-To'     => $email,
         'MIME-Version' => '1.0',
         'Content-Type' => 'multipart/alternative; boundary="' . $boundary . '"',
     ],
-    '-f' . SENDER,
+    '-f' . $mail['from'],
 );
 
 redirect($sent ? 'ok' : 'server');

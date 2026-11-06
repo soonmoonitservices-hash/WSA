@@ -6,3 +6,6 @@ Screenshot*.png
 
 .vercel
 .env*
+
+# Formular-Empfänger – niemals einchecken
+wsa-kontakt.php

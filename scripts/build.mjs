@@ -81,25 +81,6 @@ async function writeSecurityTxt() {
   await writeFile(join(DIST, '.well-known', 'security.txt'), `${lines.join('\n')}\n`);
 }
 
-/** Trägt Empfänger und Absender aus site.js in dist/api/kontakt.php ein. */
-async function configureContactForm() {
-  const file = join(DIST, 'api', 'kontakt.php');
-  const recipient = site.contact.email.trim();
-  const sender = (site.form?.sender || recipient).trim();
-  const isEmail = (value) => /^[^\s@'\\]+@[^\s@'\\]+\.[a-z]{2,}$/i.test(value);
-
-  if (!recipient) {
-    console.log('\n⚠ contact.email ist leer – das Kontaktformular verschickt noch keine E-Mails.');
-    return;
-  }
-  if (!isEmail(recipient) || !isEmail(sender)) throw new Error('contact.email oder form.sender ist keine gültige E-Mail-Adresse.');
-
-  const php = (await readFile(file, 'utf8'))
-    .replace("const RECIPIENT = '';", `const RECIPIENT = '${recipient}';`)
-    .replace("const SENDER = '';", `const SENDER = '${sender}';`);
-  await writeFile(file, php);
-}
-
 async function build() {
   const started = performance.now();
   await rm(DIST, { recursive: true, force: true });
@@ -118,7 +99,6 @@ async function build() {
 
   await writeSeoFiles();
   await writeSecurityTxt();
-  await configureContactForm();
 
   const ms = Math.round(performance.now() - started);
   console.log(`✔ ${pages.length} Seiten nach dist/ gebaut (${ms} ms)`);

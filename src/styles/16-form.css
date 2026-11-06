@@ -207,6 +207,11 @@ textarea.form__input {
   font-variant-numeric: tabular-nums;
 }
 
+.form__count.is-near {
+  color: var(--f-error);
+  font-weight: 600;
+}
+
 /* ---------- Auswahl-Chips ---------- */
 .form__topics {
   min-width: 0;

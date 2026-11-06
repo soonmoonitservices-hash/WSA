@@ -39,10 +39,12 @@ Der Build listet alle fehlenden Angaben auf; auf der Seite erscheinen sie gelb m
    - **Vercel, empfohlen für den Livegang:** Konto bei [resend.com](https://resend.com) anlegen, Domain verifizieren und in Vercel unter Settings → Environment Variables `MAIL_PROVIDER=resend`, `RESEND_API_KEY`, `MAIL_TO` und `MAIL_FROM` setzen. Optional `FORM_SECRET` (langer Zufallswert). Danach neu deployen.
    - Antworten auf eine Anfrage gehen in beiden Fällen direkt an den Absender (Reply-To).
    - **Hostinger (oder anderes PHP-Hosting) – ohne Vercel und ohne Resend:**
-     1. In `src/data/site.js` die Firmen-E-Mail bei `contact.email` eintragen (empfängt die Anfragen). Liegt das Postfach nicht bei Hostinger, in hPanel → E-Mails ein Postfach wie `website@domain.de` anlegen und bei `form.sender` eintragen; SPF-Eintrag für Hostinger im DNS prüfen.
-     2. `npm run build` – Empfänger und Absender werden automatisch in `dist/api/kontakt.php` eingetragen.
-     3. Inhalt von `dist/` (inkl. `.htaccess`, `.user.ini`, `.well-known`) nach `public_html/` hochladen.
-     4. hPanel: SSL aktivieren, PHP-Version auf die neueste 8.4/8.5 stellen.
+     1. `npm run build` und den Inhalt von `dist/` (inkl. `.htaccess`, `.user.ini`, `.well-known`) nach `public_html/` hochladen.
+     2. Empfänger festlegen – **die Adresse steht nie im Code, im Repository oder im Web-Ordner:** `config/wsa-kontakt.example.php` kopieren, in `wsa-kontakt.php` umbenennen, `to` (Empfänger) und ggf. `from` (Postfach auf der eigenen Domain, in hPanel → E-Mails anlegen) eintragen und **eine Ebene über `public_html`** hochladen, Rechte 600. Alternativ Server-Variablen `WSA_MAIL_TO` / `WSA_MAIL_FROM`. `wsa-kontakt.php` ist in `.gitignore`.
+     3. hPanel: SSL aktivieren, PHP-Version auf die neueste 8.4/8.5 stellen. Liegt das Firmenpostfach nicht bei Hostinger: SPF-Eintrag für Hostinger im DNS prüfen.
+   - Auf Vercel steht der Empfänger nur in der Umgebungsvariable `MAIL_TO` (nicht im Code).
+   - `contact.email` in `src/data/site.js` ist nur die öffentliche Adresse für Impressum und Kontaktseite. Am besten für das Formular ein eigenes, nicht veröffentlichtes Postfach als Empfänger nutzen.
+   - Nachrichten sind auf 500 Zeichen begrenzt (Formular, `api/_lib/guard.js`, `kontakt.php`).
    - Die E-Mail an die Firma ist gestaltet (HTML + Text): Anliegen, Name, E-Mail, Telefon, Nachricht, Knöpfe „Jetzt antworten“ und „Anrufen“.
 4. `src/data/jobs.js` und `src/data/faq.js`: Stellen, Beschäftigungsarten, „Wir bieten“ und FAQ-Antworten mit der Geschäftsführung abstimmen.
 

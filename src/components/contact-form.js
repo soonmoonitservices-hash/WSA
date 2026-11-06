@@ -81,13 +81,13 @@ export const contactForm = () => html`
       <label class="form__label" for="nachricht">${labelText('Ihre Nachricht', true)}</label>
       <div class="form__control form__control--area">
         ${icon('message', 'icon form__icon')}
-        <textarea class="form__input" id="nachricht" name="nachricht" rows="6" minlength="2" maxlength="5000" required
+        <textarea class="form__input" id="nachricht" name="nachricht" rows="6" minlength="2" maxlength="500" required
           aria-describedby="nachricht-error nachricht-count"
           placeholder="Was dürfen wir für Sie absichern? Ort, Zeitraum, Umfang …"></textarea>
       </div>
       <div class="form__meta">
         <p class="form__error" id="nachricht-error">${icon('alert')}Bitte schreiben Sie uns kurz Ihr Anliegen.</p>
-        <span class="form__count" id="nachricht-count" data-count-for="nachricht" aria-live="polite" hidden>0 / 5000</span>
+        <span class="form__count" id="nachricht-count" data-count-for="nachricht">0 / 500</span>
       </div>
     </div>
 
