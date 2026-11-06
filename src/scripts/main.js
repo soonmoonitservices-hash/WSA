@@ -65,6 +65,7 @@ initDropdowns();
 initFormStatus();
 initContactForm();
 initGallery();
+initFlipCards();
 initCookieBanner();
 initHeroVideo();
 initHeroNetwork();

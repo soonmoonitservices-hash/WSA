@@ -2,6 +2,8 @@ import { raw } from '../lib/html.js';
 
 /** 24×24 stroke icons. Only static, trusted markup lives here. */
 const PATHS = {
+  rotate: '<path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/>',
+  arrowLeft: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
   user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
   message: '<path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/>',
   send: '<path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/>',

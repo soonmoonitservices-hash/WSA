@@ -21,15 +21,48 @@ const jobMeta = (job) => html`
   </ul>
 `;
 
+/**
+ * Stellenkarte zum Umdrehen (src/scripts/flip-card.js).
+ * Vorne: Eckdaten der Stelle. Hinten: Aufgaben, Profil und Bewerben.
+ * Ohne JavaScript bleibt die Vorderseite mit dem Link zur Stelle sichtbar.
+ */
 const jobCard = (job) => html`
-  <li class="card">
-    <a class="card__link" href="${jobPath(job)}">
-      <span class="card__icon">${icon(job.icon)}</span>
-      <h3 class="card__title">${job.title}</h3>
-      <p class="card__text">${job.summary}</p>
-      ${jobMeta(job)}
-      <span class="card__more">Zur Stelle ${icon('arrowRight')}</span>
-    </a>
+  <li class="flip-card" data-flip-card>
+    <div class="flip-card__rotor">
+      <article class="flip-card__face flip-card__face--front">
+        <div class="flip-card__top">
+          <span class="flip-card__icon">${icon(job.icon)}</span>
+          <span class="flip-card__badge">Jetzt bewerben</span>
+        </div>
+        <h3 class="flip-card__title">${job.title}</h3>
+        <ul class="flip-card__tags">
+          ${job.employmentTypes.map((type) => html`<li>${type}</li>`)}
+        </ul>
+        <p class="flip-card__text">${job.summary}</p>
+        <ul class="flip-card__facts">
+          <li>${icon('pin')}${contact.city || 'Region Hannover'}</li>
+          <li>${icon('badge')}Unterrichtung nach § 34a GewO</li>
+        </ul>
+        <div class="flip-card__actions">
+          <a class="flip-card__link" href="${jobPath(job)}">Zur Stelle ${icon('arrowRight')}</a>
+          <button class="flip-card__turn" type="button" data-flip-toggle hidden>${icon('rotate')}Details</button>
+        </div>
+        <span class="flip-card__glare" aria-hidden="true"></span>
+      </article>
+      <div class="flip-card__face flip-card__face--back" aria-hidden="true" inert>
+        <p class="flip-card__eyebrow">${job.title}</p>
+        <h4 class="flip-card__subtitle">Ihre Aufgaben</h4>
+        <ul class="flip-card__list">${job.tasks.slice(0, 4).map((item) => html`<li>${icon('check')}${item}</li>`)}</ul>
+        <h4 class="flip-card__subtitle">Das bringen Sie mit</h4>
+        <ul class="flip-card__list">${job.profile.slice(0, 3).map((item) => html`<li>${icon('check')}${item}</li>`)}</ul>
+        <div class="flip-card__actions">
+          <a class="button button--primary flip-card__apply" href="${applyHref(job)}">Jetzt bewerben ${icon('arrowRight')}</a>
+          <a class="flip-card__link" href="${jobPath(job)}">Alle Details</a>
+          <button class="flip-card__turn" type="button" data-flip-toggle aria-label="Karte zurückdrehen">${icon('rotate')}</button>
+        </div>
+        <span class="flip-card__glare" aria-hidden="true"></span>
+      </div>
+    </div>
   </li>
 `;
 
@@ -60,7 +93,7 @@ export const careers = {
     <section class="section">
       <div class="container">
         ${sectionHeading({ eyebrow: 'Stellenangebote', title: 'Offene Stellen', intro: 'Finden Sie die Stelle, die zu Ihnen passt.' })}
-        <ul class="card-grid card-grid--jobs">${jobs.map(jobCard)}</ul>
+        <ul class="flip-grid">${jobs.map(jobCard)}</ul>
       </div>
     </section>
     <section class="section">
