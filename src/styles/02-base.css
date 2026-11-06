@@ -76,6 +76,11 @@ address {
   outline-offset: 2px;
 }
 
+/* hidden-Attribut immer respektieren, auch wenn eine Komponente display setzt (z. B. Cookie-Hinweis). */
+[hidden] {
+  display: none !important;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
