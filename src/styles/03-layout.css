@@ -11,6 +11,11 @@ main > section {
   color: var(--t-text);
 }
 
+/* Endet eine Seite mit einem blauen Abschnitt, trennt ein weißer Bereich ihn vom blauen Footer. */
+main > section:last-child:nth-child(odd) {
+  margin-bottom: var(--space-xl);
+}
+
 .section {
   padding-block: var(--space-xl);
 }
