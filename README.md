@@ -35,7 +35,9 @@ Der Build listet alle fehlenden Angaben auf; auf der Seite erscheinen sie gelb m
 1. `src/data/site.js`: Adresse, Telefon, E-Mail, 24h-Notrufnummer (`emergency.phone`), `url` (Domain), Impressumsdaten, ggf. Öffnungszeiten und Login-URL.
 2. `src/pages/legal.js`: Texte der Datenschutzerklärung.
 3. Kontaktformular einrichten:
-   - **Vercel:** Konto bei [resend.com](https://resend.com) anlegen, Domain verifizieren und in Vercel unter Settings → Environment Variables `RESEND_API_KEY`, `MAIL_TO` und `MAIL_FROM` setzen. Optional `FORM_SECRET` (langer Zufallswert). Danach neu deployen.
+   - **Vercel, aktuell (Test):** `MAIL_PROVIDER=formsubmit` und `MAIL_TO` sind gesetzt. Versand über FormSubmit.co ohne Konto; beim ersten Versand muss der Empfänger einen Bestätigungslink anklicken. FormSubmit ist ein externer Dienstleister → in der Datenschutzerklärung nennen oder vor dem Livegang auf Resend umstellen.
+   - **Vercel, empfohlen für den Livegang:** Konto bei [resend.com](https://resend.com) anlegen, Domain verifizieren und in Vercel unter Settings → Environment Variables `MAIL_PROVIDER=resend`, `RESEND_API_KEY`, `MAIL_TO` und `MAIL_FROM` setzen. Optional `FORM_SECRET` (langer Zufallswert). Danach neu deployen.
+   - Antworten auf eine Anfrage gehen in beiden Fällen direkt an den Absender (Reply-To).
    - **Apache/PHP:** in `public/api/kontakt.php` `RECIPIENT` und `SENDER` setzen.
 4. `src/data/jobs.js` und `src/data/faq.js`: Stellen, Beschäftigungsarten, „Wir bieten“ und FAQ-Antworten mit der Geschäftsführung abstimmen.
 

@@ -2,19 +2,24 @@
  * Kontaktformular auf Vercel (Node.js-Function, keine Abhängigkeiten).
  *
  *   GET  /api/kontakt/  → signiertes Formular-Token (holt das Script beim Laden)
- *   POST /api/kontakt/  → prüft alles und sendet die Anfrage per E-Mail (Resend)
+ *   POST /api/kontakt/  → prüft alles und sendet die Anfrage per E-Mail
  *
  * Umgebungsvariablen (Vercel → Project → Settings → Environment Variables):
- *   RESEND_API_KEY  API-Key von resend.com (Domain dort verifizieren)
- *   MAIL_TO         Empfänger, z. B. info@wsa-sicherheit.de
- *   MAIL_FROM       Absender auf der verifizierten Domain, z. B. website@wsa-sicherheit.de
+ *   MAIL_TO         Empfänger der Anfragen
+ *   MAIL_PROVIDER   'resend' (Standard, mit eigener Domain) oder 'formsubmit'
+ *                   (ohne Konto; beim ersten Versand kommt eine Bestätigungs-Mail)
+ *   RESEND_API_KEY  nur für Resend: API-Key von resend.com
+ *   MAIL_FROM       nur für Resend: Absender auf der verifizierten Domain
  *   FORM_SECRET     optional: langer Zufallswert zum Signieren der Tokens
+ *
+ * Antworten gehen immer direkt an den Absender (Reply-To).
  */
 import { createHash } from 'node:crypto';
 import { checkContent, checkToken, createToken, isSameOrigin, LIMITS, readFields } from './_lib/guard.js';
 
-const { RESEND_API_KEY = '', MAIL_TO = '', MAIL_FROM = '', FORM_SECRET = '' } = process.env;
-const SECRET = FORM_SECRET || createHash('sha256').update(`wsa-form|${RESEND_API_KEY}`).digest('hex');
+const { RESEND_API_KEY = '', MAIL_TO = '', MAIL_FROM = '', FORM_SECRET = '', MAIL_PROVIDER = 'resend' } = process.env;
+const SECRET = FORM_SECRET || createHash('sha256').update(`wsa-form|${RESEND_API_KEY}|${MAIL_TO}`).digest('hex');
+const SITE_ORIGIN = 'https://wsa-sicherheit.vercel.app';
 
 const NO_STORE = { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' };
 
@@ -45,11 +50,15 @@ const clientIp = (request) =>
 // ---- E-Mail ---------------------------------------------------------------
 const LABELS = { vorname: 'Vorname', nachname: 'Nachname', email: 'E-Mail', telefon: 'Telefon', nachricht: 'Nachricht' };
 
-async function sendMail(data) {
-  const text = Object.entries(LABELS)
+const SUBJECT = 'Neue Anfrage über die Website';
+
+const toText = (data) =>
+  Object.entries(LABELS)
     .map(([key, label]) => `${label}:${key === 'nachricht' ? '\n' : ' '}${data[key] || '–'}`)
     .join('\n');
 
+/** Resend: eigener Absender auf verifizierter Domain. */
+async function sendViaResend(data) {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
@@ -57,14 +66,44 @@ async function sendMail(data) {
       from: `WSA Website <${MAIL_FROM}>`,
       to: [MAIL_TO],
       reply_to: data.email,
-      subject: 'Neue Anfrage über die Website',
-      text,
+      subject: SUBJECT,
+      text: toText(data),
     }),
     signal: AbortSignal.timeout(8000),
   });
   if (!response.ok) console.error('kontakt: Resend antwortet', response.status, await response.text());
   return response.ok;
 }
+
+/** FormSubmit.co: ohne Konto, Empfänger bestätigt einmalig per Link. */
+async function sendViaFormSubmit(data, origin) {
+  const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(MAIL_TO)}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json', Origin: origin, Referer: `${origin}/kontakt/` },
+    body: JSON.stringify({
+      Vorname: data.vorname || '–',
+      Nachname: data.nachname || '–',
+      'E-Mail': data.email,
+      Telefon: data.telefon || '–',
+      Nachricht: data.nachricht,
+      _subject: SUBJECT,
+      _replyto: data.email,
+      _template: 'table',
+      _captcha: 'false',
+    }),
+    signal: AbortSignal.timeout(8000),
+  });
+  const result = await response.json().catch(() => ({}));
+  const ok = response.ok && String(result.success) === 'true';
+  if (!ok) console.error('kontakt: FormSubmit antwortet', response.status, JSON.stringify(result));
+  return ok;
+}
+
+const isConfigured = () =>
+  MAIL_TO && (MAIL_PROVIDER === 'formsubmit' || (RESEND_API_KEY && MAIL_FROM));
+
+const sendMail = (data, origin) =>
+  MAIL_PROVIDER === 'formsubmit' ? sendViaFormSubmit(data, origin) : sendViaResend(data);
 
 // ---- Handler --------------------------------------------------------------
 export function GET() {
@@ -94,14 +133,14 @@ export async function POST(request) {
   if (check.result === 'drop') return redirect(request, 'ok');
   if (check.result === 'error') return redirect(request, check.status);
 
-  if (!RESEND_API_KEY || !MAIL_TO || !MAIL_FROM) {
-    console.error('kontakt: RESEND_API_KEY / MAIL_TO / MAIL_FROM fehlen.');
+  if (!isConfigured()) {
+    console.error('kontakt: Mailversand nicht konfiguriert (MAIL_TO, MAIL_PROVIDER, RESEND_API_KEY, MAIL_FROM).');
     return redirect(request, 'server');
   }
   if (isRateLimited(clientIp(request))) return redirect(request, 'limit');
 
   try {
-    return redirect(request, (await sendMail(data)) ? 'ok' : 'server');
+    return redirect(request, (await sendMail(data, url.origin.startsWith('http://localhost') ? SITE_ORIGIN : url.origin)) ? 'ok' : 'server');
   } catch (error) {
     console.error('kontakt: Versand fehlgeschlagen', error);
     return redirect(request, 'server');
