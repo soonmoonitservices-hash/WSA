@@ -23,7 +23,8 @@ src/
   styles/             CSS, nach Nummer zusammengefügt (Tokens → Basis → Komponenten)
   scripts/            Navigation, Cookie-Hinweis, Hero-Animation
   lib/html.js         Template-Funktion, escaped alle Werte automatisch (XSS-Schutz)
-public/               wird 1:1 kopiert: Logo, Favicon, .htaccess, api/kontakt.php
+public/               wird 1:1 kopiert: Logo, Favicon, .htaccess, api/kontakt.php (Apache)
+api/                  Vercel-Function fürs Kontaktformular, _lib/guard.js = Spam-Schutz-Regeln
 scripts/              Build & Dev-Server
 ```
 
@@ -33,7 +34,9 @@ Der Build listet alle fehlenden Angaben auf; auf der Seite erscheinen sie gelb m
 
 1. `src/data/site.js`: Adresse, Telefon, E-Mail, 24h-Notrufnummer (`emergency.phone`), `url` (Domain), Impressumsdaten, ggf. Öffnungszeiten und Login-URL.
 2. `src/pages/legal.js`: Texte der Datenschutzerklärung.
-3. `public/api/kontakt.php`: `RECIPIENT` und `SENDER` setzen.
+3. Kontaktformular einrichten:
+   - **Vercel:** Konto bei [resend.com](https://resend.com) anlegen, Domain verifizieren und in Vercel unter Settings → Environment Variables `RESEND_API_KEY`, `MAIL_TO` und `MAIL_FROM` setzen. Optional `FORM_SECRET` (langer Zufallswert). Danach neu deployen.
+   - **Apache/PHP:** in `public/api/kontakt.php` `RECIPIENT` und `SENDER` setzen.
 4. `src/data/jobs.js` und `src/data/faq.js`: Stellen, Beschäftigungsarten, „Wir bieten“ und FAQ-Antworten mit der Geschäftsführung abstimmen.
 
 Sobald Straße und Ort eingetragen sind, erhalten die Stellenseiten automatisch Google-for-Jobs-Daten (JobPosting).
@@ -49,8 +52,16 @@ Das Video wurde ohne Tonspur neu kodiert (720p ≈ 1,2 MB, 360p ≈ 0,35 MB für
 
 ## Sicherheit & Performance
 
-- Strenge Content-Security-Policy, HSTS, Clickjacking- und MIME-Schutz (`public/.htaccess`).
-- Kein Inline-JavaScript/-CSS, keine externen Skripte, Schriften oder Tracker.
-- Kontaktformular: Honeypot, serverseitige Validierung, Rate-Limit, kein Header-Injection-Risiko.
+- Strenge Content-Security-Policy mit Trusted Types, HSTS, Clickjacking-, MIME- und Cross-Origin-Schutz (`vercel.json` und `public/.htaccess` – beide gleich halten). Der Dev-Server sendet dieselben Header.
+- Kein Inline-JavaScript/-CSS, keine externen Skripte, Schriften oder Tracker, keine npm-Abhängigkeiten.
+- Apache: nur GET/HEAD/POST, keine Verzeichnislisten, versteckte Dateien gesperrt.
+- `/.well-known/security.txt` wird erzeugt, sobald eine E-Mail-Adresse eingetragen ist.
+- Kontaktformular – Spam-Schutz ohne Captcha:
+  - signiertes Zeit-Token (holt das Script beim Laden; Absenden frühestens nach 3 s, höchstens nach 6 h)
+  - Honeypot-Feld, Herkunftsprüfung (nur von der eigenen Website), Größenlimit
+  - Filter für Links/HTML/BBCode, max. 2 Links pro Nachricht
+  - Rate-Limit: 1 Anfrage pro Minute, 5 pro Stunde je IP
+  - Bots erhalten stillschweigend die Dankeseite, damit sie nichts lernen
+  - serverseitige Validierung, kein Header-Injection-Risiko
 - CSS/JS gebündelt mit Content-Hash → 1 Jahr Browser-Cache; HTML immer aktuell.
 - Hero-Animation pausiert außerhalb des Sichtbereichs und entfällt bei „Bewegung reduzieren“.
